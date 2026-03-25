@@ -1,0 +1,11 @@
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\ArchipelagoBepin6Template.Unity.IL2Cpp.csproj.AssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\ArchipelagoBepin6Template.Unity.IL2Cpp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\ArchipelagoBepin6Template.Unity.IL2Cpp.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\WeLoveArchipelago.dll
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\refint\WeLoveArchipelago.dll
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\WeLoveArchipelago.pdb
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\BepInEx\plugins\WeLoveArchipelago\WeLoveArchipelago.deps.json
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\BepInEx\plugins\WeLoveArchipelago\WeLoveArchipelago.dll
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\BepInEx\plugins\WeLoveArchipelago\WeLoveArchipelago.pdb
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\ArchipelagoBepin6Template.Unity.IL2Cpp.csproj.CopyComplete
+C:\Program Files (x86)\Steam\steamapps\common\WLKRR\WeLoveArchipelago\obj\Debug\ref\WeLoveArchipelago.dll
