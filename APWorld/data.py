@@ -15,7 +15,7 @@ list_of_fans = [
     "Dr. Katamari",
     "Crane Hat Boy",
     "Just-Right Girl",
-    "Cowbear Farmer"
+    "Cowbear Farmer",
     "Excited Baby",
     "Cleanly Mom",
     "Fund-raiser",
@@ -719,7 +719,7 @@ fans_items = {
         "ID": 26 + fans_offset,
         "classification": ItemClassification.progression
     },
-    "Michiru Hoshino": {
+    "Mutsuo Hoshino": {
         "ID": 27 + fans_offset,
         "classification": ItemClassification.progression
     }
@@ -778,3 +778,5 @@ traps_items = {
         "classification": ItemClassification.trap
     }
 }
+
+all_items = fans_items | cousins_items | presents_items | traps_items | filler_items

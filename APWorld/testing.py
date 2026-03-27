@@ -1,4 +1,3 @@
-
 list_of_cousins = [
     "The Prince",
     "Lalala",
@@ -48,4 +47,70 @@ for cousin in list_of_cousins:
     cousins_items.update({cousin: {"ID": cousin_id, "classification": "something"}})
     cousin_id += 1
 
-print(cousins_items)
+list_of_presents = [
+    "Headphones",
+    "Crown",
+    "Giraffe Hat",
+    "Ribbons",
+    "Flower",
+    "Little Buddy",
+    "Mt. Fuji",
+    "Mushroom",
+    "Antenna",
+    "Peacock Feathers",
+    "Horsey",
+    "Bikini",
+    "Camera",
+    "Pochette",
+    "Scarf",
+    "Guitar",
+    "Cool Belt",
+    "Moustache",
+    "Trumpet",
+    "Glasses",
+    "Wig",
+    "Royal Mask",
+    "Mask",
+    "Bunny Ears",
+    "Long Nose",
+    "Pencil",
+    "Tutu",
+    "Tire",
+    "Singlet",
+    "Note Glasses",
+    "Little Prince",
+    "Little King"
+]
+
+
+fans_and_cousins_logic = {
+    "Rainbow Girl": ["Macho"],
+    "Lazybones": ["Can-Can", "Havana"],
+    "Grandpa": ["Johnson", "Twinkle", "Kuro"],
+    "Grandma": ["Foomin", "Miki", "Velvet"],
+    "Bird & Elephant": ["Shikao", "Lucha", "Nutsuo", "Drooby"],
+    "Dog": [],
+    "Soccer Kid": ["Ace", "Slip"],
+    "Ikebana Teacher": ["Ichigo"],
+    "Substitute Teacher": ["Miso", "Huey"],
+    "F1 Racer": ["Odeko", "Shy", "Nickel"],
+    "Rain Coat Girl": ["June", "Fujio"],
+    "Dr. Katamari": ["Beyond", "Njamo"],
+    "Crane Hat Boy": ["Opeo"],
+    "Just-Right Girl": ["Marcy", "Peso", "Signolo"],
+    "Cowbear Farmer": ["Daisy"],
+    "Excited Baby": ["Jungle"],
+    "Cleanly Mom": ["L'Amour"],
+    "Fund-raiser": ["Odeon"],
+    "Hansel & Gretel": ["Honey"],
+    "Float Boy": ["Marny"],
+    "Camper Man": ["Kinoko"],
+    "Mini-Sumo": ["Nik"],
+    "Snow Child": ["Lalala"],
+    "Book Worm": ["Dipp"],
+    "Tomio Hoshino": [],
+    "Mutsuo Hoshino": []
+}
+
+for fan in fans_and_cousins_logic:
+    print(fan)
