@@ -44,7 +44,6 @@ class StartingLevel(Choice):
     option_snow_child = 22
     option_book_worm = 23
     option_tomio_hoshino = 26
-    option_michiru_hoshino = 27
 
     default = option_soccer_kid
 

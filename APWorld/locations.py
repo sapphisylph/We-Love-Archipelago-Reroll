@@ -20,9 +20,9 @@ def create_all_locations(world: WeLoveKatamariRerollWorld) -> None:
 
 def create_regular_locations(world: WeLoveKatamariRerollWorld) -> None:
     for location_name in data.all_locations:
-        if location_name == "Roll Up The Prince" and not data.FUTURE_YAML_OPTION_FOR_ALTERNATIVE_COUSIN_LOGIC:
+        if location_name == "Cousin: The Prince" and not data.FUTURE_YAML_OPTION_FOR_ALTERNATIVE_COUSIN_LOGIC:
             continue
-        if location_name == "Roll Up The Sun Complete":
+        if location_name == "Level Complete: Roll Up The Sun" or location_name == "Level Complete: Cousins":
             continue
         current_region = world.get_region(data.all_locations[location_name]["region"])
         location_to_add = get_location_names_with_ids([location_name])

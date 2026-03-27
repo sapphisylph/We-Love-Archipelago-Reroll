@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 def set_all_rules(world: WeLoveKatamariRerollWorld) -> None:
     set_completion_condition(world)
     set_all_entrance_rules(world)
+    set_all_location_rules(world)
 
 def set_all_entrance_rules(world: WeLoveKatamariRerollWorld) -> None:
     # I can't for the life of me figure out what the problem was with me using a for loop for this so we're DOING THINGS THE LONG WAY
@@ -25,6 +26,10 @@ def set_all_entrance_rules(world: WeLoveKatamariRerollWorld) -> None:
     def can_play_grandpa(state: CollectionState) -> bool:
         return state.has("Grandpa", world.player)
     set_rule(world.get_entrance("Grandpa Open in Select Meadow"), can_play_grandpa)
+
+    def can_play_grandma(state: CollectionState) -> bool:
+        return state.has("Grandma", world.player)
+    set_rule(world.get_entrance("Grandma Open in Select Meadow"), can_play_grandma)
 
     def can_play_bird_and_elephant(state: CollectionState) -> bool:
         return state.has("Bird & Elephant", world.player)
@@ -114,6 +119,9 @@ def set_all_entrance_rules(world: WeLoveKatamariRerollWorld) -> None:
         return state.has("Mutsuo Hoshino", world.player)
     set_rule(world.get_entrance("Mutsuo Hoshino Open in Select Meadow"), can_play_mutsuo_hoshino)
 
+def set_all_location_rules(world: WeLoveKatamariRerollWorld) -> None:
+    slip_rollup = world.get_location("Cousin: Slip")
+    set_rule(slip_rollup, lambda state: state.has("Ace", world.player))
 
 def set_completion_condition(world: WeLoveKatamariRerollWorld) -> None:
     world.multiworld.completion_condition[world.player] = lambda state: state.count("Level Unlocked", world.player) >= 23

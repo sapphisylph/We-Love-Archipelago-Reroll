@@ -42,6 +42,8 @@ def create_all_items(world: WeLoveKatamariRerollItem) -> None:
         itempool.append(world.create_item(fan))
 
     cousins_to_add = world.random.sample(data.list_of_cousins, world.options.cousin_amount)
+    if "Ace" not in cousins_to_add:
+        cousins_to_add[world.random.randint(0, len(cousins_to_add) - 1)] = "Ace"
     for cousin in cousins_to_add:
         itempool.append(world.create_item(cousin))
 

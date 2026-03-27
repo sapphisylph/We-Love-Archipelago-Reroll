@@ -174,175 +174,175 @@ item_offset_ids = {
 level_clear_offset = location_offset_ids["Level Clears"]
 
 level_clear_locations = {
-    "Roll Up The Sun Complete": {
+    "Level Complete: Roll Up The Sun": {
         "ID": 1 + level_clear_offset,
         "region": "Dog"
     },
-    "Tutorial Complete": {
+    "Level Complete: Tutorial": {
         "ID": 3 + level_clear_offset,
         "region": "Soccer Kid"
     },
-    "ALAP1 Complete": {
+    "Level Complete: ALAP1": {
         "ID": 4 + level_clear_offset,
         "region": "Rainbow Girl"
     },
-    "ALAP2 Complete": {
+    "Level Complete: ALAP2": {
         "ID": 5 + level_clear_offset,
         "region": "Lazybones"
     },
-    "ALAP3 Complete": {
+    "Level Complete: ALAP3": {
         "ID": 6 + level_clear_offset,
         "region": "Grandpa"
     },
-    "ALAP4 Complete": {
+    "Level Complete: ALAP4": {
         "ID": 7 + level_clear_offset,
         "region": "Grandma"
     },
-    "ALAP5 Complete": {
+    "Level Complete: ALAP5": {
         "ID": 8 + level_clear_offset,
         "region": "Bird & Elephant"
     },
-    "Flowers Complete": {
+    "Level Complete: Flowers": {
         "ID": 9 + level_clear_offset,
         "region": "Ikebana Teacher"
     },
-    "School Complete": {
+    "Level Complete: School": {
         "ID": 10 + level_clear_offset,
         "region": "Substitute Teacher"
     },
-    "Race Complete": {
+    "Level Complete: Race": {
         "ID": 11 + level_clear_offset,
         "region": "F1 Racer"
     },
-    "Clouds Complete": {
+    "Level Complete: Clouds": {
         "ID": 12 + level_clear_offset,
         "region": "Rain Coat Girl"
     },
-    "Friends Complete": {
+    "Level Complete: Friends": {
         "ID": 13 + level_clear_offset,
         "region": "Dr. Katamari"
     },
-    "Cranes Complete": {
+    "Level Complete: Cranes": {
         "ID": 14 + level_clear_offset,
         "region": "Crane Hat Boy"
     },
-    "Small Just-Right Complete": {
+    "Level Complete: Small Just-Right": {
         "ID": 15 + level_clear_offset,
         "region": "Just-Right Girl"
     },
-    "Cowbear Complete": {
+    "Level Complete: Cowbear": {
         "ID": 16 + level_clear_offset,
         "region": "Cowbear Farmer"
     },
-    "50 Items Complete": {
+    "Level Complete: 50 Items": {
         "ID": 17 + level_clear_offset,
         "region": "Excited Baby"
     },
-    "Cleaning Complete": {
+    "Level Complete: Cleaning": {
         "ID": 18 + level_clear_offset,
         "region": "Cleanly Mom"
     },
-    "Money Complete": {
+    "Level Complete: Money": {
         "ID": 19 + level_clear_offset,
         "region": "Fund-raiser"
     },
-    "Sweets Complete": {
+    "Level Complete: Sweets": {
         "ID": 20 + level_clear_offset,
         "region": "Hansel & Gretel"
     },
-    "Underwater Complete": {
+    "Level Complete: Underwater": {
         "ID": 21 + level_clear_offset,
         "region": "Float Boy"
     },
-    "Small Fire Complete": {
+    "Level Complete: Small Fire": {
         "ID": 22 + level_clear_offset,
         "region": "Camper Man"
     },
-    "Sumo 1 Complete": {
+    "Level Complete: Sumo 1": {
         "ID": 23 + level_clear_offset,
         "region": "Mini-Sumo"
     },
-    "Snowman Complete": {
+    "Level Complete: Snowman": {
         "ID": 24 + level_clear_offset,
         "region": "Snow Child"
     },
-    "Fireflies Complete": {
+    "Level Complete: Fireflies": {
         "ID": 25 + level_clear_offset,
         "region": "Book Worm"
     },
-    "Countries Complete": {
+    "Level Complete: Countries": {
         "ID": 28 + level_clear_offset,
         "region": "Tomio Hoshino"
     },
-    "Cousins Complete": {
+    "Level Complete: Cousins": {
         "ID": 29 + level_clear_offset,
         "region": "Mutsuo Hoshino"
     },
-    "AFAP1 Complete": {
+    "Level Complete: AFAP1": {
         "ID": 30 + level_clear_offset,
         "region": "Rainbow Girl"
     },
-    "AFAP2 Complete": {
+    "Level Complete: AFAP2": {
         "ID": 31 + level_clear_offset,
         "region": "Lazybones"
     },
-    "AFAP3 Complete": {
+    "Level Complete: AFAP3": {
         "ID": 32 + level_clear_offset,
         "region": "Grandpa"
     },
-    "AFAP4 Complete": {
+    "Level Complete: AFAP4": {
         "ID": 33 + level_clear_offset,
         "region": "Grandma"
     },
-    "AFAP5 Complete": {
+    "Level Complete: AFAP5": {
         "ID": 34 + level_clear_offset,
         "region": "Bird & Elephant"
     },
-    "Fast Flowers Complete": {
+    "Level Complete: Fast Flowers": {
         "ID": 35 + level_clear_offset,
         "region": "Ikebana Teacher"
     },
-    "Students Complete": {
+    "Level Complete: Students": {
         "ID": 36 + level_clear_offset,
         "region": "Substitute Teacher"
     },
-    "Fast Race Complete": {
+    "Level Complete: Fast Race": {
         "ID": 37 + level_clear_offset,
         "region": "F1 Racer"
     },
-    "Fast Friends Complete": {
+    "Level Complete: Fast Friends": {
         "ID": 38 + level_clear_offset,
         "region": "Dr. Katamari"
     },
-    "Medium Just-Right Complete": {
+    "Level Complete: Medium Just-Right": {
         "ID": 39 + level_clear_offset,
         "region": "Just-Right Girl"
     },
-    "Large Just-Right Complete": {
+    "Level Complete: Large Just-Right": {
         "ID": 40 + level_clear_offset,
         "region": "Just-Right Girl"
     },
-    "Sweetsville Complete": {
+    "Level Complete: Sweetsville": {
         "ID": 41 + level_clear_offset,
         "region": "Hansel & Gretel"
     },
-    "Fast Underwater Complete": {
+    "Level Complete: Fast Underwater": {
         "ID": 42 + level_clear_offset,
         "region": "Float Boy"
     },
-    "Medium Fire Complete": {
+    "Level Complete: Medium Fire": {
         "ID": 43 + level_clear_offset,
         "region": "Camper Man"
     },
-    "Large Fire Complete": {
+    "Level Complete: Large Fire": {
         "ID": 44 + level_clear_offset,
         "region": "Camper Man"
     },
-    "Sumo 2 Complete": {
+    "Level Complete: Sumo 2": {
         "ID": 45 + level_clear_offset,
         "region": "Mini-Sumo"
     },
-    "Sumo 3 Complete": {
+    "Level Complete: Sumo 3": {
         "ID": 46 + level_clear_offset,
         "region": "Mini-Sumo"
     }
@@ -351,163 +351,163 @@ level_clear_locations = {
 cousin_rollup_offset = location_offset_ids["Cousins"]
 
 cousin_rollup_locations = {
-    "Roll Up The Prince": {
+    "Cousin: The Prince": {
         "ID": 0 + cousin_rollup_offset,
         "region": "The Prince Collect"
     },
-    "Roll Up Lalala": {
+    "Cousin: Lalala": {
         "ID": 1 + cousin_rollup_offset,
         "region": "Lalala Collect"
     },
-    "Roll Up Nik": {
+    "Cousin: Nik": {
         "ID": 2 + cousin_rollup_offset,
         "region": "Nik Collect"
     },
-    "Roll Up Ace": {
+    "Cousin: Ace": {
         "ID": 3 + cousin_rollup_offset,
         "region": "Ace Collect"
     },
-    "Roll Up Johnson": {
+    "Cousin: Johnson": {
         "ID": 4 + cousin_rollup_offset,
         "region": "Johnson Collect"
     },
-    "Roll Up Velvet": {
+    "Cousin: Velvet": {
         "ID": 5 + cousin_rollup_offset,
         "region": "Velvet Collect"
     },
-    "Roll Up Fujio": {
+    "Cousin: Fujio": {
         "ID": 6 + cousin_rollup_offset,
         "region": "Fujio Collect"
     },
-    "Roll Up Havana": {
+    "Cousin: Havana": {
         "ID": 7 + cousin_rollup_offset,
         "region": "Havana Collect"
     },
-    "Roll Up Peso": {
+    "Cousin: Peso": {
         "ID": 8 + cousin_rollup_offset,
         "region": "Peso Collect"
     },
-    "Roll Up Shikao": {
+    "Cousin: Shikao": {
         "ID": 9 + cousin_rollup_offset,
         "region": "Shikao Collect"
     },
-    "Roll Up Odeko": {
+    "Cousin: Odeko": {
         "ID": 10 + cousin_rollup_offset,
         "region": "Odeko Collect"
     },
-    "Roll Up Honey": {
+    "Cousin: Honey": {
         "ID": 11 + cousin_rollup_offset,
         "region": "Honey Collect"
     },
-    "Roll Up Marny": {
+    "Cousin: Marny": {
         "ID": 12 + cousin_rollup_offset,
         "region": "Marny Collect"
     },
-    "Roll Up Kuro": {
+    "Cousin: Kuro": {
         "ID": 13 + cousin_rollup_offset,
         "region": "Kuro Collect"
     },
-    "Roll Up Foomin": {
+    "Cousin: Foomin": {
         "ID": 14 + cousin_rollup_offset,
         "region": "Foomin Collect"
     },
-    "Roll Up June": {
+    "Cousin: June": {
         "ID": 15 + cousin_rollup_offset,
         "region": "June Collect"
     },
-    "Roll Up Ichigo": {
+    "Cousin: Ichigo": {
         "ID": 16 + cousin_rollup_offset,
         "region": "Ichigo Collect"
     },
-    "Roll Up Marcy": {
+    "Cousin: Marcy": {
         "ID": 17 + cousin_rollup_offset,
         "region": "Marcy Collect"
     },
-    "Roll Up Njamo": {
+    "Cousin: Njamo": {
         "ID": 18 + cousin_rollup_offset,
         "region": "Njamo Collect"
     },
-    "Roll Up Dipp": {
+    "Cousin: Dipp": {
         "ID": 19 + cousin_rollup_offset,
         "region": "Dipp Collect"
     },
-    "Roll Up Opeo": {
+    "Cousin: Opeo": {
         "ID": 20 + cousin_rollup_offset,
         "region": "Opeo Collect"
     },
-    "Roll Up Nickel": {
+    "Cousin: Nickel": {
         "ID": 21 + cousin_rollup_offset,
         "region": "Nickel Collect"
     },
-    "Roll Up Jungle": {
+    "Cousin: Jungle": {
         "ID": 22 + cousin_rollup_offset,
         "region": "Jungle Collect"
     },
-    "Roll Up Miso": {
+    "Cousin: Miso": {
         "ID": 23 + cousin_rollup_offset,
         "region": "Miso Collect"
     },
-    "Roll Up Twinkle": {
+    "Cousin: Twinkle": {
         "ID": 24 + cousin_rollup_offset,
         "region": "Twinkle Collect"
     },
-    "Roll Up Huey": {
+    "Cousin: Huey": {
         "ID": 25 + cousin_rollup_offset,
         "region": "Huey Collect"
     },
-    "Roll Up Nutsuo": {
+    "Cousin: Nutsuo": {
         "ID": 26 + cousin_rollup_offset,
         "region": "Nutsuo Collect"
     },
-    "Roll Up Beyond": {
+    "Cousin: Beyond": {
         "ID": 27 + cousin_rollup_offset,
         "region": "Beyond Collect"
     },
-    "Roll Up Kinoko": {
+    "Cousin: Kinoko": {
         "ID": 28 + cousin_rollup_offset,
         "region": "Kinoko Collect"
     },
-    "Roll Up Macho": {
+    "Cousin: Macho": {
         "ID": 29 + cousin_rollup_offset,
         "region": "Macho Collect"
     },
-    "Roll Up L'Amour": {
+    "Cousin: L'Amour": {
         "ID": 30 + cousin_rollup_offset,
         "region": "L'Amour Collect"
     },
-    "Roll Up Daisy": {
+    "Cousin: Daisy": {
         "ID": 31 + cousin_rollup_offset,
         "region": "Daisy Collect"
     },
-    "Roll Up Lucha": {
+    "Cousin: Lucha": {
         "ID": 32 + cousin_rollup_offset,
         "region": "Lucha Collect"
     },
-    "Roll Up Miki": {
+    "Cousin: Miki": {
         "ID": 33 + cousin_rollup_offset,
         "region": "Miki Collect"
     },
-    "Roll Up Odeon": {
+    "Cousin: Odeon": {
         "ID": 34 + cousin_rollup_offset,
         "region": "Odeon Collect"
     },
-    "Roll Up Can-Can": {
+    "Cousin: Can-Can": {
         "ID": 35 + cousin_rollup_offset,
         "region": "Can-Can Collect"
     },
-    "Roll Up Shy": {
+    "Cousin: Shy": {
         "ID": 36 + cousin_rollup_offset,
         "region": "Shy Collect"
     },
-    "Roll Up Slip": {
+    "Cousin: Slip": {
         "ID": 37 + cousin_rollup_offset,
         "region": "Slip Collect"
     },
-    "Roll Up Drooby": {
+    "Cousin: Drooby": {
         "ID": 38 + cousin_rollup_offset,
         "region": "Drooby Collect"
     },
-    "Roll Up Signolo": {
+    "Cousin: Signolo": {
         "ID": 39 + cousin_rollup_offset,
         "region": "Signolo Collect"
     }
@@ -516,99 +516,99 @@ cousin_rollup_locations = {
 present_rollup_offset = location_offset_ids["Presents"]
 
 present_rollup_locations = {
-    "Roll up Present: Headphones": {
+    "Present: Headphones (Rainbow Girl)": {
         "ID": 4 + present_rollup_offset,
         "region": "Rainbow Girl"
     },
-    "Roll up Present: Camera": {
+    "Present: Camera (Lazybones)": {
         "ID": 5 + present_rollup_offset,
         "region": "Lazybones"
     },
-    "Roll up Present: Crown": {
+    "Present: Crown (Grandpa)": {
         "ID": 6 + present_rollup_offset,
         "region": "Grandpa"
     },
-    "Roll up Present: Little Buddy": {
+    "Present: Little Buddy (Grandma)": {
         "ID": 7 + present_rollup_offset,
         "region": "Grandma"
     },
-    "Roll up Present: Mt. Fuji": {
+    "Present: Mt. Fuji (Bird & Elephant)": {
         "ID": 8 + present_rollup_offset,
         "region": "Bird & Elephant"
     },
-    "Roll up Present: Flower": {
+    "Present: Flower (Ikebana Teacher)": {
         "ID": 9 + present_rollup_offset,
         "region": "Ikebana Teacher"
     },
-    "Roll up Present: Ribbons": {
+    "Present: Ribbons (Substitute Teacher)": {
         "ID": 10 + present_rollup_offset,
         "region": "Substitute Teacher"
     },
-    "Roll up Present: Horsey": {
+    "Present: Horsey (F1 Racer)": {
         "ID": 11 + present_rollup_offset,
         "region": "F1 Racer"
     },
-    "Roll up Present: Trumpet": {
+    "Present: Trumpet (Rain Coat Girl)": {
         "ID": 12 + present_rollup_offset,
         "region": "Rain Coat Girl"
     },
-    "Roll up Present: Giraffe Hat": {
+    "Present: Giraffe Hat (Dr. Katamari)": {
         "ID": 13 + present_rollup_offset,
         "region": "Dr. Katamari"
     },
-    "Roll up Present: Pochette": {
+    "Present: Pochette (Crane Hat Boy)": {
         "ID": 14 + present_rollup_offset,
         "region": "Crane Hat Boy"
     },
-    "Roll up Present: Scarf": {
+    "Present: Scarf (Just-Right Girl (Small))": {
         "ID": 15 + present_rollup_offset,
         "region": "Just-Right Girl"
     },
-    "Roll up Present: Moustache": {
+    "Present: Moustache (Cowbear Farmer)": {
         "ID": 16 + present_rollup_offset,
         "region": "Cowbear Farmer"
     },
-    "Roll up Present: Peacock Feathers": {
+    "Present: Peacock Feathers (Excited Baby)": {
         "ID": 17 + present_rollup_offset,
         "region": "Excited Baby"
     },
-    "Roll up Present: Antenna": {
+    "Present: Antenna (Cleanly Mom)": {
         "ID": 18 + present_rollup_offset,
         "region": "Cleanly Mom"
     },
-    "Roll up Present: Wig": {
+    "Present: Wig (Fund-raiser)": {
         "ID": 19 + present_rollup_offset,
         "region": "Fund-raiser"
     },
-    "Roll up Present: Long Nose": {
+    "Present: Long Nose (Hansel & Gretel)": {
         "ID": 20 + present_rollup_offset,
         "region": "Hansel & Gretel"
     },
-    "Roll up Present: Bikini": {
+    "Present: Bikini (Float Boy)": {
         "ID": 21 + present_rollup_offset,
         "region": "Float Boy"
     },
-    "Roll up Present: Mushroom": {
+    "Present: Mushroom (Camper Man)": {
         "ID": 22 + present_rollup_offset,
         "region": "Camper Man"
     },
-    "Roll up Present: Cool Belt": {
+    "Present: Cool Belt (Mini-Sumo)": {
         "ID": 23 + present_rollup_offset,
         "region": "Mini-Sumo"
     },
-    "Roll up Present: Royal Mask": {
+    "Present: Royal Mask (Snow Child)": {
         "ID": 24 + present_rollup_offset,
         "region": "Snow Child"
     },
-    "Roll up Present: Glasses": {
+    "Present: Glasses (Book Worm)": {
         "ID": 25 + present_rollup_offset,
         "region": "Book Worm"
     },
-    "Roll up Present: Guitar": {
+    "Present: Guitar (Just-Right Girl (Medium))": {
         "ID": 39 + present_rollup_offset,
         "region": "Just-Right Girl"
     },
-    "Roll up Present: Mask": {
+    "Present: Mask (Just-Right Girl (Large))": {
         "ID": 40 + present_rollup_offset,
         "region": "Just-Right Girl"
     }
@@ -730,7 +730,10 @@ cousins_offset = item_offset_ids["Cousins"]
 cousins_items = {}
 cousin_id = 0
 for cousin in list_of_cousins:
-    cousins_items.update({cousin: {"ID": cousin_id + cousins_offset, "classification": ItemClassification.filler}})
+    if cousin == "Ace":
+        cousins_items.update({cousin: {"ID": cousin_id + cousins_offset, "classification": ItemClassification.progression}})
+    else:
+        cousins_items.update({cousin: {"ID": cousin_id + cousins_offset, "classification": ItemClassification.filler}})
     cousin_id += 1
 
 presents_offset = item_offset_ids["Presents"]
