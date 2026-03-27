@@ -1,0 +1,9 @@
+- Fix Present IDs
+- Fix the race and campfire exceptions
+- Fix the sumo checks
+- Make all cousins appear on first run    (force them to be active upon progressive area load? will that work given the campfire exceptions?)
+- Force collection to always be spawned
+- Make traps work
+- Allow early cousins level
+- Allow clearing RUTS on first run
+

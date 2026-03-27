@@ -31,6 +31,10 @@ public class Plugin : BasePlugin
     public static int FAN_ID_OFFSET = 1;
     public static int COUSIN_ID_OFFSET = 100;
     public static int PRESENT_ID_OFFSET = 200;
+    public static int FILLER_ID_OFFSET = 1000;
+    public static int TRAP_ID_OFFSET = 1100;
+    
+
     public static int MISSION_ID_OFFSET = 1;
     public static int PRESENT_LOCATION_ID_OFFSET = 200;
     public static int SHOOTING_STAR_ID_OFFSET = 300;
@@ -38,12 +42,12 @@ public class Plugin : BasePlugin
     public static int COUSINSANITY_ID_OFFSET = 500;
     public static int PRESENTSANITY_ID_OFFSET = 600;
 
-    
     public static int[] musicRandoList = new int[35];
     public static bool musicRandoEnabled = false;
     public static bool turnOffGPS = false;
 
     public static string currentStage = "SceneMain";
+    public static System.Random rand = new System.Random();
 
     public override void Load()
     {
@@ -75,13 +79,13 @@ public class Plugin : BasePlugin
             musicRandoList[i] = i;
         } 
         // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
-        System.Random rand = new System.Random();
         int count = musicRandoList.Length;
         while (count > 1) {
             int i = rand.Next(count--);
             (musicRandoList[i], musicRandoList[count]) = (musicRandoList[count], musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
         }
 
+        // Harmony.CreateAndPatchAll(typeof(TrapHandler));
         Harmony.CreateAndPatchAll(typeof(LocationCheckHandler));
         Harmony.CreateAndPatchAll(typeof(ReceivedItemHandler));
         Harmony.CreateAndPatchAll(typeof(Fun));

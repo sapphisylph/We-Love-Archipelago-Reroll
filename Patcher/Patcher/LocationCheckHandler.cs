@@ -7,9 +7,6 @@ namespace WeLoveArchipelago.Patcher;
 
 public class LocationCheckHandler {
 
-    // These are here for the campfire checks to reference
-    public static GameObject LOGTOWER01_E = null;
-    public static GameObject LOGTOWER02_E = null;
 
 
     // Upon stage load, store the name of the stage the player has entered for referencing below
@@ -36,7 +33,7 @@ public class LocationCheckHandler {
     // Detect present roll-ups using the King's dialogue trigger as reference
     [HarmonyPatch(typeof(TextMessageTable), nameof(TextMessageTable.GetItem)), HarmonyPostfix]
     public static void DetectPresentRollUp(int idx) {
-        if (idx == 18) {    // All present collection dialogues have ID 18
+        if (idx == 18 || idx == 19) {    // All present collection dialogues have ID 18, except for race and possibly others which have ID 19
             byte currentMission = 0;
             if (Plugin.currentStage == "MissionScene/just_size_2") {   // Since these are the only separate versions of a stage that have presents, these need a special case (else they'd all be the same check)
                     currentMission = 39;
@@ -45,6 +42,7 @@ public class LocationCheckHandler {
             } else {
                 currentMission = App.Katamari2.Game.mYm_GiGetMission();    // Since all present IDs are the same, get the mission ID to figure out which check to send 
             }
+            Plugin.BepinLogger.LogMessage($"King Dialogue ID {idx} detected: Sending present check for level {currentMission}");
             Plugin.APClient.SendCheck(currentMission + Plugin.PRESENT_LOCATION_ID_OFFSET); 
         }
     }
@@ -84,14 +82,19 @@ public class LocationCheckHandler {
         } 
     }
 
+    public static GameObject LOAD_BEARING_RICKSHAW = null;
+
     [HarmonyPatch(typeof(Game_Clear), nameof(Game_Clear.sRace)), HarmonyPostfix]
     public static void DetectRaceClear() {
-        if (Plugin.currentStage.EndsWith("B")) {
+        LOAD_BEARING_RICKSHAW = GameObject.Find("/Props 0/SELFCAR01_E");    // This object (a rickshaw) only appears in Fast Race (as one of the racers), but because both races take place in the same 'scene', it's still loaded in race ALAP, just invisible and out of bounds (along with the guy who drives it)
+        if (LOAD_BEARING_RICKSHAW.activeSelf) {     // if the rickshaw is active, then it must be AFAP
             Plugin.APClient.SendCheck(37 + Plugin.MISSION_ID_OFFSET); 
-        } else {
+        } else {    // if it is not active, then it must be ALAP
             Plugin.APClient.SendCheck(11 + Plugin.MISSION_ID_OFFSET);             
         }
     }
+    // For more info on why I do the above Like That, see the Campfire clear checks below which do the same thing for the same reason.
+
 
     [HarmonyPatch(typeof(Game_Clear), nameof(Game_Clear.sSky)), HarmonyPostfix]
     public static void DetectCloudsClear() {
@@ -160,6 +163,11 @@ public class LocationCheckHandler {
             Plugin.APClient.SendCheck(21 + Plugin.MISSION_ID_OFFSET);             
         }
     }
+
+ 
+    // These are here for the campfire checks to reference
+    public static GameObject LOGTOWER01_E = null;
+    public static GameObject LOGTOWER02_E = null;
 
     [HarmonyPatch(typeof(Game_Clear), nameof(Game_Clear.sCamp)), HarmonyPostfix]
     public static void DetectCampfireClear() {
