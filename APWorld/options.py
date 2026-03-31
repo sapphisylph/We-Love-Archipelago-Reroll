@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Range, Choice, PerGameCommonOptions
+from Options import Range, Choice, PerGameCommonOptions, Toggle
 
 class TrapChance(Range):
     """
@@ -55,7 +55,7 @@ class CousinAmount(Range):
     display_name = "Cousin Amount"
 
     range_start = 1
-    range_end = 40
+    range_end = 39
     default = 15
 
 class PresentAmount(Range):
@@ -69,9 +69,52 @@ class PresentAmount(Range):
     range_end = 32
     default = 10
 
+class EnableShootingStars(Toggle):
+    """
+    Enables the ability for shooting stars to send checks.
+    Adds 10 checks.
+    """
+
+    display_name = "Enable Shooting Stars"
+
+class EnableSuperClears(Toggle):
+    """
+    Exceeding the fans expectations counts as a super clear!
+    Receiving this praise from the King and the Fans sends out a check.
+    Adds 20, 34, or 41 more checks to the game, depending on the next two options.
+    """
+
+    display_name = "Enable Super Clears"
+
+class EnableChallengingSuperClears(Toggle):
+    """
+    Certain super clears are more challenging, requiring knowledge of the layout of items, or a specific route to take.
+    These include, but are not limited to: As Fast As Possible levels and more difficult collection levels.
+    Adds 14 checks
+
+    NOTE: Requires Super Clears to be enabled.
+    """
+
+    display_name = "Enable Challenging Super Clears"
+
+class EnableDifficultSuperClears(Toggle):
+    """
+    Some super clears are incredibly difficult, being inconsistent for even skilled players
+    These include: Cowbear, 1000 cranes, Fast Friends, Fast Underwater, Cleaning, and the Just-Right stages.
+    Adds 7 checks
+
+    NOTE: Requires Super Clears and Challenging Super Clears to be enabled.
+    """
+
+    display_name = "Enable Difficult Super Clears"
+
 @dataclass
 class WeLoveKatamariRerollOptions(PerGameCommonOptions):
     trap_chance: TrapChance
     starting_level: StartingLevel
     cousin_amount: CousinAmount
     present_amount: PresentAmount
+    enable_shooting_stars: EnableShootingStars
+    enable_super_clears: EnableSuperClears
+    enable_challenging_super_clears: EnableChallengingSuperClears
+    enable_difficult_super_clears: EnableDifficultSuperClears

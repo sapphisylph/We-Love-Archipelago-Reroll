@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from logging import exception
 from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
@@ -41,7 +42,7 @@ def create_all_items(world: WeLoveKatamariRerollItem) -> None:
             continue
         itempool.append(world.create_item(fan))
 
-    cousins_to_add = world.random.sample(data.list_of_cousins, world.options.cousin_amount)
+    cousins_to_add = world.random.sample(list(data.cousins_items), world.options.cousin_amount)
     if "Ace" not in cousins_to_add:
         cousins_to_add[world.random.randint(0, len(cousins_to_add) - 1)] = "Ace"
     for cousin in cousins_to_add:

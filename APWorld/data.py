@@ -1,4 +1,9 @@
+from __future__ import annotations
+
 from BaseClasses import ItemClassification
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .world import WeLoveKatamariRerollWorld
 
 list_of_fans = [
     "Rainbow Girl",
@@ -345,7 +350,227 @@ level_clear_locations = {
     "Level Complete: Sumo 3": {
         "ID": 46 + level_clear_offset,
         "region": "Mini-Sumo"
-    }
+    },
+}
+
+shooting_star_offset = location_offset_ids["Shooting Stars"]
+
+shooting_star_locations = {
+    "Shooting Star: ALAP1 (<1:20)": {
+        "ID": 4 + shooting_star_offset,
+        "region": "Rainbow Girl"
+    },
+    "Shooting Star: ALAP2 (<4:00)": {
+        "ID": 5 + shooting_star_offset,
+        "region": "Lazybones"
+    },
+    "Shooting Star: ALAP3 (<7:00)": {
+        "ID": 6 + shooting_star_offset,
+        "region": "Grandpa"
+    },
+    "Shooting Star: ALAP4 (<10:00)": {
+        "ID": 7 + shooting_star_offset,
+        "region": "Grandma"
+    },
+    "Shooting Star: ALAP5 (<13:00)": {
+        "ID": 8 + shooting_star_offset,
+        "region": "Bird & Elephant"
+    },
+    "Shooting Star: AFAP1 (<1:20)": {
+        "ID": 30 + shooting_star_offset,
+        "region": "Rainbow Girl"
+    },
+    "Shooting Star: AFAP2 (<1:20)": {
+        "ID": 31 + shooting_star_offset,
+        "region": "Lazybones"
+    },
+    "Shooting Star: AFAP3 (<1:20)": {
+        "ID": 32 + shooting_star_offset,
+        "region": "Grandpa"
+    },
+    "Shooting Star: AFAP4 (<1:20)": {
+        "ID": 33 + shooting_star_offset,
+        "region": "Grandma"
+    },
+    "Shooting Star: AFAP5 (<13:00)": {
+        "ID": 34 + shooting_star_offset,
+        "region": "Bird & Elephant"
+    },
+}
+
+super_clear_offset = location_offset_ids["Super Clears"]
+
+super_clear_tier_1_locations = {
+    "Super Clear: Tutorial (Complete Level)": {
+        "ID": 3 + super_clear_offset,
+        "region": "Soccer Kid"
+    },
+    "Super Clear: ALAP1 (30cm)": {
+        "ID": 4 + super_clear_offset,
+        "region": "Rainbow Girl"
+    },
+    "Super Clear: ALAP2 (90cm)": {
+        "ID": 5 + super_clear_offset,
+        "region": "Lazybones"
+    },
+    "Super Clear: ALAP3 (5m)": {
+        "ID": 6 + super_clear_offset,
+        "region": "Grandpa"
+    },
+    "Super Clear: ALAP4 (25m)": {
+        "ID": 7 + super_clear_offset,
+        "region": "Grandma"
+    },
+    "Super Clear: ALAP5 (2500m)": {
+        "ID": 8 + super_clear_offset,
+        "region": "Bird & Elephant"
+    },
+    "Super Clear: Flowers (1111)": {
+        "ID": 9 + super_clear_offset,
+        "region": "Ikebana Teacher"
+    },
+    "Super Clear: School (3m80cm)": {
+        "ID": 10 + super_clear_offset,
+        "region": "Substitute Teacher"
+    },
+    "Super Clear: Race (20m)": {
+        "ID": 11 + super_clear_offset,
+        "region": "F1 Racer"
+    },
+    "Super Clear: Clouds (475)": {
+        "ID": 12 + super_clear_offset,
+        "region": "Rain Coat Girl"
+    },
+    "Super Clear: Sweets (1344)": {
+        "ID": 20 + super_clear_offset,
+        "region": "Hansel & Gretel"
+    },
+    "Super Clear: Underwater (2m)": {
+        "ID": 21 + super_clear_offset,
+        "region": "Float Boy"
+    },
+    "Super Clear: Small Fire (3m)": {
+        "ID": 22 + super_clear_offset,
+        "region": "Camper Man"
+    },
+    "Super Clear: Sumo 1 (157kg)": {
+        "ID": 23 + super_clear_offset,
+        "region": "Mini-Sumo"
+    },
+    "Super Clear: Snowman (Complete Level)": {
+        "ID": 24 + super_clear_offset,
+        "region": "Snow Child"
+    },
+    "Super Clear: Sweetsville (1308)": {
+        "ID": 41 + super_clear_offset,
+        "region": "Hansel & Gretel"
+    },
+    "Super Clear: Medium Fire (4m20cm)": {
+        "ID": 43 + super_clear_offset,
+        "region": "Camper Man"
+    },
+    "Super Clear: Large Fire (7m40cm)": {
+        "ID": 44 + super_clear_offset,
+        "region": "Camper Man"
+    },
+    "Super Clear: Sumo 2 (241kg)": {
+        "ID": 45 + super_clear_offset,
+        "region": "Mini-Sumo"
+    },
+    "Super Clear: Sumo 3 (348kg)": {
+        "ID": 46 + super_clear_offset,
+        "region": "Mini-Sumo"
+    },
+}
+
+super_clear_tier_2_locations = {
+    "Super Clear: Friends (270)": {
+        "ID": 13 + super_clear_offset,
+        "region": "Dr. Katamari"
+    },
+    "Super Clear: 50 Items (5m50cm)": {
+        "ID": 17 + super_clear_offset,
+        "region": "Excited Baby"
+    },
+    "Super Clear: Money ($100,000)": {
+        "ID": 19 + super_clear_offset,
+        "region": "Fund-raiser"
+    },
+    "Super Clear: Fireflies (Dazzling)": {
+        "ID": 25 + super_clear_offset,
+        "region": "Book Worm"
+    },
+    "Super Clear: Countries (195)": {
+        "ID": 28 + super_clear_offset,
+        "region": "Tomio Hoshino"
+    },
+    "Super Clear: AFAP1 (<0:55)": {
+        "ID": 30 + super_clear_offset,
+        "region": "Rainbow Girl"
+    },
+    "Super Clear: AFAP2 (<0:55)": {
+        "ID": 31 + super_clear_offset,
+        "region": "Lazybones"
+    },
+    "Super Clear: AFAP3 (<0:55)": {
+        "ID": 32 + super_clear_offset,
+        "region": "Grandpa"
+    },
+    "Super Clear: AFAP4 (<0:55)": {
+        "ID": 33 + super_clear_offset,
+        "region": "Grandma"
+    },
+    "Super Clear: AFAP5 (<9:30)": {
+        "ID": 34 + super_clear_offset,
+        "region": "Bird & Elephant"
+    },
+    "Super Clear: Fast Flowers (<1:00)": {
+        "ID": 35 + super_clear_offset,
+        "region": "Ikebana Teacher"
+    },
+    "Super Clear: Students (<1:30)": {
+        "ID": 36 + super_clear_offset,
+        "region": "Substitute Teacher"
+    },
+    "Super Clear: Fast Race (<1:00)": {
+        "ID": 37 + super_clear_offset,
+        "region": "F1 Racer"
+    },
+}
+
+super_clear_tier_3_locations = {
+    "Super Clear: Cranes (1000)": {
+        "ID": 14 + super_clear_offset,
+        "region": "Crane Hat Boy"
+    },
+    "Super Clear: Small Just-Right (20cm Exactly)": {
+        "ID": 15 + super_clear_offset,
+        "region": "Just-Right Girl"
+    },
+    "Super Clear: Cowbear (Cowbear)": {
+        "ID": 16 + super_clear_offset,
+        "region": "Cowbear Farmer"
+    },
+    "Super Clear: Cleaning (<1:00)": {
+        "ID": 18 + super_clear_offset,
+        "region": "Cleanly Mom"
+    },
+    "Super Clear: Fast Friends (<0:50)": {
+        "ID": 38 + super_clear_offset,
+        "region": "Dr. Katamari"
+    },
+    "Super Clear: Medium Just-Right (2m Exactly)": {
+        "ID": 39 + super_clear_offset,
+        "region": "Just-Right Girl"
+    },
+    "Super Clear: Large Just-Right (50m Exactly)": {
+        "ID": 40 + super_clear_offset,
+        "region": "Just-Right Girl"
+    },
+    "Super Clear: Fast Underwater (<1:00)": {
+        "ID": 42 + super_clear_offset,
+        "region": "Float Boy"
+    },
 }
 
 cousin_rollup_offset = location_offset_ids["Cousins"]
@@ -614,7 +839,19 @@ present_rollup_locations = {
     }
 }
 
-all_locations = level_clear_locations | cousin_rollup_locations | present_rollup_locations
+all_locations = {}
+all_locations.update(level_clear_locations)
+all_locations.update(cousin_rollup_locations)
+all_locations.update(present_rollup_locations)
+all_locations.update(shooting_star_locations)
+all_locations.update(super_clear_tier_1_locations)
+all_locations.update(super_clear_tier_2_locations)
+all_locations.update(super_clear_tier_3_locations)
+
+base_locations = {}
+base_locations.update(level_clear_locations)
+base_locations.update(cousin_rollup_locations)
+base_locations.update(present_rollup_locations)
 
 fans_offset = item_offset_ids["Fans"]
 
@@ -730,7 +967,9 @@ cousins_offset = item_offset_ids["Cousins"]
 cousins_items = {}
 cousin_id = 0
 for cousin in list_of_cousins:
-    if cousin == "Ace":
+    if cousin == "The Prince":
+        pass
+    elif cousin == "Ace":
         cousins_items.update({cousin: {"ID": cousin_id + cousins_offset, "classification": ItemClassification.progression}})
     else:
         cousins_items.update({cousin: {"ID": cousin_id + cousins_offset, "classification": ItemClassification.filler}})
