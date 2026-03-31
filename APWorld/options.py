@@ -81,7 +81,7 @@ class EnableSuperClears(Toggle):
     """
     Exceeding the fans expectations counts as a super clear!
     Receiving this praise from the King and the Fans sends out a check.
-    Adds 20, 34, or 41 more checks to the game, depending on the next two options.
+    Adds 20, 33, or 41 more checks to the game, depending on the next two options.
     """
 
     display_name = "Enable Super Clears"
@@ -90,7 +90,7 @@ class EnableChallengingSuperClears(Toggle):
     """
     Certain super clears are more challenging, requiring knowledge of the layout of items, or a specific route to take.
     These include, but are not limited to: As Fast As Possible levels and more difficult collection levels.
-    Adds 14 checks
+    Adds 13 checks
 
     NOTE: Requires Super Clears to be enabled.
     """
@@ -101,7 +101,7 @@ class EnableDifficultSuperClears(Toggle):
     """
     Some super clears are incredibly difficult, being inconsistent for even skilled players
     These include: Cowbear, 1000 cranes, Fast Friends, Fast Underwater, Cleaning, and the Just-Right stages.
-    Adds 7 checks
+    Adds 8 checks
 
     NOTE: Requires Super Clears and Challenging Super Clears to be enabled.
     """
