@@ -6,6 +6,7 @@ using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Packets;
+using WeLoveArchipelago.Patcher;
 // using WeLoveArchipelago.Utils;
 
 namespace WeLoveArchipelago.Archipelago;
@@ -13,7 +14,7 @@ namespace WeLoveArchipelago.Archipelago;
 public class ArchipelagoClient
 {
     public const string APVersion = "0.6.6";
-    private const string Game = "We Love Katamari REROLL";
+    private const string Game = "We Love Katamari Reroll";
 
     public static bool Authenticated;
     private bool attemptingConnection;
@@ -136,7 +137,11 @@ public class ArchipelagoClient
 
 	public void SendCheck(int location) {
         Plugin.BepinLogger.LogMessage($"Sending check: {location}");
+        try {
 		session.Locations.CompleteLocationChecks(location);
+        } catch (NullReferenceException e) {
+            Plugin.BepinLogger.LogError("Failed to send location check. The server may be down or you may have otherwise lost connection to the AP server. Check that the server is still running and reconnect. \n Full error message: \n" + e);
+        }
 	}
 
 	public void Goal() {
@@ -169,17 +174,64 @@ public class ArchipelagoClient
         int itemId = (int) receivedItem.ItemId;
         Plugin.BepinLogger.LogMessage($"Received {receivedItem.ItemName} from {receivedItem.Player.Name}!");
 
-        if (itemId < Plugin.FAN_ID_OFFSET) {
-            Plugin.fans.Add(itemId - Plugin.FAN_ID_OFFSET);
-        } else if (itemId < Plugin.COUSIN_ID_OFFSET) {
-            Plugin.cousins.Add(itemId - Plugin.COUSIN_ID_OFFSET);
-        } else if (itemId < Plugin.PRESENT_ID_OFFSET) {
-            Plugin.presents.Add(itemId - Plugin.PRESENT_ID_OFFSET);
-        } else
-        {
-            Plugin.BepinLogger.LogMessage($"Received item {receivedItem.ItemName} is not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+
+            // Trap stuff (currently broken)
+
+
+                // if (itemId >= Plugin.TRAP_ID_OFFSET) {
+
+                //     int trapId = itemId - Plugin.TRAP_ID_OFFSET;
+
+                    // TODO: Put these into a queue rather than letting them sit here
+
+                //     if (trapId == 0) {
+                //         TrapHandler.TriggerDialogueTrap();
+                //     } else if (trapId == 1) {
+                //         TrapHandler.WishYouWereHere((byte)Plugin.rand.Next(7)); // choose a random number from 0 to 7, and trigger that photo frame to appear (i made this function use bytes bc lower memory requirements, that's why the (byte) is there)
+                //     } else if (trapId == 2) {
+                //         // Time Stop Trap
+                //     } else if (trapId == 3) {
+                //         // UI Loss Trap
+                //     } else {
+                //         Plugin.BepinLogger.LogMessage($"Received trap {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+                //     }
+                // }
+                // else
+
+        if (itemId >= Plugin.FILLER_ID_OFFSET) {
+
+            int fillerId = itemId - Plugin.FILLER_ID_OFFSET;
+
+            if (fillerId == 0) {
+                Patcher.ReceivedItemHandler.stardustQueue += 10;    // "Stardust" adds 10 stardust to the queue, which is later put ingame by a hooked function in ReceivedItemHandler
+            } else if (fillerId == 1) {
+                Patcher.ReceivedItemHandler.stardustQueue += 50;    // "Shining Stars" adds 50 stardust to the queue
+            } else if (fillerId == 2) {
+                Patcher.ReceivedItemHandler.stardustQueue += 100;   // "Bright Shining Stars" adds 100 stardust to the queue
+            } else {
+                Plugin.BepinLogger.LogMessage($"Received filler item {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+            }
         }
-        
+
+        else if (itemId >= Plugin.PRESENT_ID_OFFSET) {
+            Plugin.presents.Add(itemId - Plugin.PRESENT_ID_OFFSET);
+        }
+
+        else if (itemId >= Plugin.COUSIN_ID_OFFSET) {
+            Plugin.cousins.Add(itemId - Plugin.COUSIN_ID_OFFSET);
+        }
+
+        else if (itemId >= Plugin.FAN_ID_OFFSET) {
+            Plugin.fans.Add(itemId - Plugin.FAN_ID_OFFSET);
+            if (!(Plugin.cousinsAppearAnywhere)) {
+                ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
+                ForceCousinsToAppearPatch.recentlyReceivedFans.Add(itemId - Plugin.FAN_ID_OFFSET);
+            }
+        }
+
+        else {
+            Plugin.BepinLogger.LogMessage($"Received item {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+        }
     }
 
     /// <summary>

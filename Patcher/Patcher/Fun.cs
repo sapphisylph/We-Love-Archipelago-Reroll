@@ -30,6 +30,9 @@ public class Fun {
             case 6:
                 __result = "We've come to make an announcement. RoboKing is a complete loser. He rolled up Our Queen! That's right. He took his weird cuckoo clock core out and rolled up Our Queen, and he said his katamari was THIS BIG, And We said \"That's disgusting!\" So We're making a callout post on Our Katamari Damacy Rolling LIVE. RoboKing, you have a small katamari. It's the size of this walnut except WAY smaller. And guess what, here's what Our katamari looks like! That's right, \\ouji[0]! All lumps, no vaults, no cuckoo clocks! Look at that, it looks like a takoyaki but without the stick. He rolled up Our Queen, so guess what? We're gonna roll up the earth! Except We're not gonna roll up the earth, We're gonna go higher! We're rolling up the sun! How do you like that, Papa? We rolled up the sun, you idiot! You have 23 hours before a meteor hits the earth. Now get out of Our sight before We roll you up too!";
                 break;
+            case 7:
+                __result = "Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah ";
+                break;
             default:
                 return true;
         }

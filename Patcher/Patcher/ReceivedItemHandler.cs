@@ -6,6 +6,9 @@ namespace WeLoveArchipelago.Patcher;
 public class ReceivedItemHandler {
     
 
+    public static uint stardustQueue = 0; 
+
+
     [HarmonyPatch(typeof(Save_Data), nameof(Save_Data.GetFanIsAlive)), HarmonyPrefix]
     public static bool FanSpawner(ref bool __result, int fan_index, ref int clear_count) {
         clear_count = 25;       // Not sure if this is required
@@ -38,6 +41,13 @@ public class ReceivedItemHandler {
             __result = 0;
         }
         return false;
+    }
+
+
+    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiGameSetStarDustCount)), HarmonyPrefix]
+    public static void AddStardust(ref uint _n) {
+        _n += stardustQueue;    // Add any queued stardust from the multiworld to the amount in-game
+        stardustQueue = 0;      // Reset the queue
     }
 
 }
