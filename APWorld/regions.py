@@ -26,13 +26,13 @@ def create_all_regions(world: WeLoveKatamariRerollWorld) -> None:
 
 def connect_regions(world: WeLoveKatamariRerollWorld) -> None:
     select_meadow = world.get_region("Select Meadow")
+    cousins_logic = data.get_cousins_logic(world)
 
-    for fan in data.fans_and_cousins_logic:
+    for fan in cousins_logic:
         fan_region = world.get_region(fan)
         select_meadow.connect(fan_region, f"{fan} Open in Select Meadow")
-        for cousin in data.fans_and_cousins_logic[fan]:
+        for cousin in set(cousins_logic[fan]):
             fan_region.connect(world.get_region(f"{cousin} Collect"), f"Collect {cousin} in {fan}")
 
-
-    if not data.FUTURE_YAML_OPTION_FOR_ALTERNATIVE_COUSIN_LOGIC:
-        select_meadow.connect(world.get_region("The Prince Collect"), "Collect Prince in Select Meadow")
+    if not bool(world.options.enable_alternative_cousin_logic.value):
+        select_meadow.connect(world.get_region("The Prince Collect"), "Collect The Prince in Select Meadow")

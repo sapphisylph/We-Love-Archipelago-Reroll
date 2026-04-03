@@ -14,12 +14,10 @@ class WeLoveKatamariRerollWorld(World):
     options_dataclass = wlk_options.WeLoveKatamariRerollOptions
     options: wlk_options.WeLoveKatamariRerollOptions
 
-    location_name_to_id = {
-        location_name: data.all_locations[location_name]["ID"] for location_name in data.all_locations
-    }
-    item_name_to_id = {
-        item_name: data.all_items[item_name]["ID"] for item_name in data.all_items
-    }
+    location_name_to_id = {location_name: data.all_locations[location_name]["ID"] for location_name in data.all_locations}
+    location_name_groups = locations.generate_location_groups()
+    item_name_to_id = {item_name: data.all_items[item_name]["ID"] for item_name in data.all_items}
+    item_name_groups = items.generate_item_groups()
 
     origin_region_name = "Select Meadow"
 
@@ -41,6 +39,6 @@ class WeLoveKatamariRerollWorld(World):
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         return self.options.as_dict(
-            "trap_chance", "starting_level", "cousin_amount", "present_amount"
+            "enable_alternative_cousin_logic"
         )
 

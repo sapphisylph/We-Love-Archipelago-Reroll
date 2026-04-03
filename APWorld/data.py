@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from BaseClasses import ItemClassification
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from .world import WeLoveKatamariRerollWorld
+
+from BaseClasses import ItemClassification
 
 list_of_fans = [
     "Rainbow Girl",
@@ -141,22 +143,24 @@ fans_and_cousins_logic = {
     "Mutsuo Hoshino": []
 }
 
-FUTURE_YAML_OPTION_FOR_ALTERNATIVE_COUSIN_LOGIC = False
-if FUTURE_YAML_OPTION_FOR_ALTERNATIVE_COUSIN_LOGIC:
-    fans_and_cousins_logic["Rainbow Girl"].append("The Prince")
-    fans_and_cousins_logic["Bird & Elephant"] = list_of_cousins
-    fans_and_cousins_logic["Ikebana Teacher"].append("L'Amour")
-    fans_and_cousins_logic["Crane Hat Boy"].append("Fujio")
-    fans_and_cousins_logic["Just-Right Girl"].append("Nutsuo")
-    fans_and_cousins_logic["Cowbear Farmer"].append("Njamo")
-    fans_and_cousins_logic["Excited Baby"].append("June")
-    fans_and_cousins_logic["Cleanly Mom"].extend(["Kuro", "Havana", "Nickel"])
-    fans_and_cousins_logic["Fund-raiser"].extend(["Twinkle", "Opeo", "Ichigo", "Can-Can", "Slip"])
-    fans_and_cousins_logic["Float Boy"].append("Fujio")
-    fans_and_cousins_logic["Mini-Sumo"].extend(["Kinoko", "Miso", "The Prince", "Slip"])
-    fans_and_cousins_logic["Snow Child"].append("L'Amour")
-    fans_and_cousins_logic["Book Worm"].extend(["Marny"])
-    fans_and_cousins_logic["Mutsuo Hoshino"] = list_of_cousins
+def get_cousins_logic(world: WeLoveKatamariRerollWorld) -> dict[str, list[str]]:
+    cousins_logic = fans_and_cousins_logic
+
+    if bool(world.options.enable_alternative_cousin_logic.value):
+        cousins_logic["Rainbow Girl"].append("The Prince")
+        cousins_logic["Ikebana Teacher"].append("L'Amour")
+        cousins_logic["Crane Hat Boy"].append("Fujio")
+        cousins_logic["Just-Right Girl"].append("Nutsuo")
+        cousins_logic["Cowbear Farmer"].append("Njamo")
+        cousins_logic["Excited Baby"].append("June")
+        cousins_logic["Cleanly Mom"].extend(["Kuro", "Havana", "Nickel"])
+        cousins_logic["Fund-raiser"].extend(["Twinkle", "Opeo", "Ichigo", "Can-Can", "Slip"])
+        cousins_logic["Float Boy"].append("Foomin")
+        cousins_logic["Mini-Sumo"].extend(["Kinoko", "Miso", "The Prince", "Slip"])
+        cousins_logic["Snow Child"].append("L'Amour")
+        cousins_logic["Book Worm"].extend(["Marny"])
+
+    return cousins_logic
 
 location_offset_ids = {
     "Level Clears": 1,
@@ -181,175 +185,175 @@ level_clear_offset = location_offset_ids["Level Clears"]
 level_clear_locations = {
     "Level Complete: Roll Up The Sun": {
         "ID": 1 + level_clear_offset,
-        "region": "Dog"
+        "region": "Dog",
     },
     "Level Complete: Tutorial": {
         "ID": 3 + level_clear_offset,
-        "region": "Soccer Kid"
+        "region": "Soccer Kid",
     },
     "Level Complete: ALAP1": {
         "ID": 4 + level_clear_offset,
-        "region": "Rainbow Girl"
+        "region": "Rainbow Girl",
     },
     "Level Complete: ALAP2": {
         "ID": 5 + level_clear_offset,
-        "region": "Lazybones"
+        "region": "Lazybones",
     },
     "Level Complete: ALAP3": {
         "ID": 6 + level_clear_offset,
-        "region": "Grandpa"
+        "region": "Grandpa",
     },
     "Level Complete: ALAP4": {
         "ID": 7 + level_clear_offset,
-        "region": "Grandma"
+        "region": "Grandma",
     },
     "Level Complete: ALAP5": {
         "ID": 8 + level_clear_offset,
-        "region": "Bird & Elephant"
+        "region": "Bird & Elephant",
     },
     "Level Complete: Flowers": {
         "ID": 9 + level_clear_offset,
-        "region": "Ikebana Teacher"
+        "region": "Ikebana Teacher",
     },
     "Level Complete: School": {
         "ID": 10 + level_clear_offset,
-        "region": "Substitute Teacher"
+        "region": "Substitute Teacher",
     },
     "Level Complete: Race": {
         "ID": 11 + level_clear_offset,
-        "region": "F1 Racer"
+        "region": "F1 Racer",
     },
     "Level Complete: Clouds": {
         "ID": 12 + level_clear_offset,
-        "region": "Rain Coat Girl"
+        "region": "Rain Coat Girl",
     },
     "Level Complete: Friends": {
         "ID": 13 + level_clear_offset,
-        "region": "Dr. Katamari"
+        "region": "Dr. Katamari",
     },
     "Level Complete: Cranes": {
         "ID": 14 + level_clear_offset,
-        "region": "Crane Hat Boy"
+        "region": "Crane Hat Boy",
     },
     "Level Complete: Small Just-Right": {
         "ID": 15 + level_clear_offset,
-        "region": "Just-Right Girl"
+        "region": "Just-Right Girl",
     },
     "Level Complete: Cowbear": {
         "ID": 16 + level_clear_offset,
-        "region": "Cowbear Farmer"
+        "region": "Cowbear Farmer",
     },
     "Level Complete: 50 Items": {
         "ID": 17 + level_clear_offset,
-        "region": "Excited Baby"
+        "region": "Excited Baby",
     },
     "Level Complete: Cleaning": {
         "ID": 18 + level_clear_offset,
-        "region": "Cleanly Mom"
+        "region": "Cleanly Mom",
     },
     "Level Complete: Money": {
         "ID": 19 + level_clear_offset,
-        "region": "Fund-raiser"
+        "region": "Fund-raiser",
     },
     "Level Complete: Sweets": {
         "ID": 20 + level_clear_offset,
-        "region": "Hansel & Gretel"
+        "region": "Hansel & Gretel",
     },
     "Level Complete: Underwater": {
         "ID": 21 + level_clear_offset,
-        "region": "Float Boy"
+        "region": "Float Boy",
     },
     "Level Complete: Small Fire": {
         "ID": 22 + level_clear_offset,
-        "region": "Camper Man"
+        "region": "Camper Man",
     },
     "Level Complete: Sumo 1": {
         "ID": 23 + level_clear_offset,
-        "region": "Mini-Sumo"
+        "region": "Mini-Sumo",
     },
     "Level Complete: Snowman": {
         "ID": 24 + level_clear_offset,
-        "region": "Snow Child"
+        "region": "Snow Child",
     },
     "Level Complete: Fireflies": {
         "ID": 25 + level_clear_offset,
-        "region": "Book Worm"
+        "region": "Book Worm",
     },
     "Level Complete: Countries": {
         "ID": 28 + level_clear_offset,
-        "region": "Tomio Hoshino"
+        "region": "Tomio Hoshino",
     },
     "Level Complete: Cousins": {
         "ID": 29 + level_clear_offset,
-        "region": "Mutsuo Hoshino"
+        "region": "Mutsuo Hoshino",
     },
     "Level Complete: AFAP1": {
         "ID": 30 + level_clear_offset,
-        "region": "Rainbow Girl"
+        "region": "Rainbow Girl",
     },
     "Level Complete: AFAP2": {
         "ID": 31 + level_clear_offset,
-        "region": "Lazybones"
+        "region": "Lazybones",
     },
     "Level Complete: AFAP3": {
         "ID": 32 + level_clear_offset,
-        "region": "Grandpa"
+        "region": "Grandpa",
     },
     "Level Complete: AFAP4": {
         "ID": 33 + level_clear_offset,
-        "region": "Grandma"
+        "region": "Grandma",
     },
     "Level Complete: AFAP5": {
         "ID": 34 + level_clear_offset,
-        "region": "Bird & Elephant"
+        "region": "Bird & Elephant",
     },
     "Level Complete: Fast Flowers": {
         "ID": 35 + level_clear_offset,
-        "region": "Ikebana Teacher"
+        "region": "Ikebana Teacher",
     },
     "Level Complete: Students": {
         "ID": 36 + level_clear_offset,
-        "region": "Substitute Teacher"
+        "region": "Substitute Teacher",
     },
     "Level Complete: Fast Race": {
         "ID": 37 + level_clear_offset,
-        "region": "F1 Racer"
+        "region": "F1 Racer",
     },
     "Level Complete: Fast Friends": {
         "ID": 38 + level_clear_offset,
-        "region": "Dr. Katamari"
+        "region": "Dr. Katamari",
     },
     "Level Complete: Medium Just-Right": {
         "ID": 39 + level_clear_offset,
-        "region": "Just-Right Girl"
+        "region": "Just-Right Girl",
     },
     "Level Complete: Large Just-Right": {
         "ID": 40 + level_clear_offset,
-        "region": "Just-Right Girl"
+        "region": "Just-Right Girl",
     },
     "Level Complete: Sweetsville": {
         "ID": 41 + level_clear_offset,
-        "region": "Hansel & Gretel"
+        "region": "Hansel & Gretel",
     },
     "Level Complete: Fast Underwater": {
         "ID": 42 + level_clear_offset,
-        "region": "Float Boy"
+        "region": "Float Boy",
     },
     "Level Complete: Medium Fire": {
         "ID": 43 + level_clear_offset,
-        "region": "Camper Man"
+        "region": "Camper Man",
     },
     "Level Complete: Large Fire": {
         "ID": 44 + level_clear_offset,
-        "region": "Camper Man"
+        "region": "Camper Man",
     },
     "Level Complete: Sumo 2": {
         "ID": 45 + level_clear_offset,
-        "region": "Mini-Sumo"
+        "region": "Mini-Sumo",
     },
     "Level Complete: Sumo 3": {
         "ID": 46 + level_clear_offset,
-        "region": "Mini-Sumo"
+        "region": "Mini-Sumo",
     },
 }
 
@@ -445,10 +449,6 @@ super_clear_tier_1_locations = {
         "ID": 20 + super_clear_offset,
         "region": "Hansel & Gretel"
     },
-    "Super Clear: Underwater (2m)": {
-        "ID": 21 + super_clear_offset,
-        "region": "Float Boy"
-    },
     "Super Clear: Small Fire (3m)": {
         "ID": 22 + super_clear_offset,
         "region": "Camper Man"
@@ -495,6 +495,10 @@ super_clear_tier_2_locations = {
     "Super Clear: Money ($100,000)": {
         "ID": 19 + super_clear_offset,
         "region": "Fund-raiser"
+    },
+    "Super Clear: Underwater (2m)": {
+        "ID": 21 + super_clear_offset,
+        "region": "Float Boy"
     },
     "Super Clear: Fireflies (Dazzling)": {
         "ID": 25 + super_clear_offset,
@@ -852,6 +856,11 @@ base_locations = {}
 base_locations.update(level_clear_locations)
 base_locations.update(cousin_rollup_locations)
 base_locations.update(present_rollup_locations)
+
+super_clears_locations = {}
+super_clears_locations.update(super_clear_tier_1_locations)
+super_clears_locations.update(super_clear_tier_2_locations)
+super_clears_locations.update(super_clear_tier_3_locations)
 
 fans_offset = item_offset_ids["Fans"]
 

@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING
 from BaseClasses import CollectionState
 from worlds.generic.Rules import add_rule, set_rule
 
+from . import data
+
 if TYPE_CHECKING:
     from .world import WeLoveKatamariRerollWorld
 
@@ -119,9 +121,14 @@ def set_all_entrance_rules(world: WeLoveKatamariRerollWorld) -> None:
         return state.has("Mutsuo Hoshino", world.player)
     set_rule(world.get_entrance("Mutsuo Hoshino Open in Select Meadow"), can_play_mutsuo_hoshino)
 
+    def collect_slip_in_tutorial(state: CollectionState) -> bool:
+        return state.has("Ace", world.player)
+    set_rule(world.get_entrance("Collect Slip in Soccer Kid"), collect_slip_in_tutorial)
+
 def set_all_location_rules(world: WeLoveKatamariRerollWorld) -> None:
-    slip_rollup = world.get_location("Cousin: Slip")
-    set_rule(slip_rollup, lambda state: state.has("Ace", world.player))
+    if bool(world.options.enable_alternative_cousin_logic.value):
+        prince_rollup = world.get_location("Cousin: The Prince")
+        set_rule(prince_rollup, lambda state: state.has_from_list(data.list_of_cousins, world.player, 1))
 
 def set_completion_condition(world: WeLoveKatamariRerollWorld) -> None:
     world.multiworld.completion_condition[world.player] = lambda state: state.count("Level Unlocked", world.player) >= 23

@@ -14,11 +14,11 @@ class WeLoveKatamariRerollItem(Item):
     game = "We Love Katamari Reroll"
 
 def get_random_filler_item_name(world: WeLoveKatamariRerollWorld) -> str:
-    if world.random.randint(0, 99) < world.options.trap_chance:
-        trap_item_id = world.random.randint(0, len(data.traps_items) - 1) + data.traps_offset
-        for trap_item in data.traps_items:
-            if trap_item_id == data.traps_items[trap_item]["ID"]:
-                return trap_item
+#    if world.random.randint(0, 99) < world.options.trap_chance:
+#        trap_item_id = world.random.randint(0, len(data.traps_items) - 1) + data.traps_offset
+#        for trap_item in data.traps_items:
+#            if trap_item_id == data.traps_items[trap_item]["ID"]:
+#                return trap_item
 
     filler_item_id = world.random.randint(0, len(data.filler_items) - 1) + data.filler_offset
     for filler_item in data.filler_items:
@@ -29,7 +29,8 @@ def get_random_filler_item_name(world: WeLoveKatamariRerollWorld) -> str:
 
 def create_item_with_correct_classification(world: WeLoveKatamariRerollWorld, name: str) -> WeLoveKatamariRerollItem:
     classification = data.all_items[name]["classification"]
-
+    if name != "Ace" and name in data.list_of_cousins and bool(world.options.enable_alternative_cousin_logic.value):
+        classification = ItemClassification.progression_deprioritized_skip_balancing
     return WeLoveKatamariRerollItem(name, classification, data.all_items[name]["ID"], world.player)
 
 def create_all_items(world: WeLoveKatamariRerollItem) -> None:
@@ -41,24 +42,49 @@ def create_all_items(world: WeLoveKatamariRerollItem) -> None:
             starting_fan = fan
             continue
         itempool.append(world.create_item(fan))
+        if bool(world.options.enable_duplicates.value):
+            itempool.append(world.create_item(fan))
 
     cousins_to_add = world.random.sample(list(data.cousins_items), world.options.cousin_amount)
+    presents_to_add = world.random.sample(list(data.list_of_presents), world.options.present_amount)
+    total_cosmetics = len(cousins_to_add) + len(presents_to_add)
+    total_items = len(itempool) + total_cosmetics
+    unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))
+
+    if total_items > unfilled_locations:
+        for i in range(0, total_items - unfilled_locations):
+            random_value = world.random.randint(0, total_cosmetics - 1)
+            if random_value < len(cousins_to_add):
+                cousins_to_add.pop(random_value)
+            else:
+                presents_to_add.pop(random_value - len(cousins_to_add))
+            total_cosmetics = len(cousins_to_add) + len(presents_to_add)
+
     if "Ace" not in cousins_to_add:
         cousins_to_add[world.random.randint(0, len(cousins_to_add) - 1)] = "Ace"
     for cousin in cousins_to_add:
         itempool.append(world.create_item(cousin))
 
-    presents_to_add = world.random.sample(data.list_of_presents, world.options.present_amount)
     for present in presents_to_add:
         itempool.append(world.create_item(present))
 
-    item_number = len(itempool)
-    location_number = len(world.multiworld.get_unfilled_locations(world.player))
-    needed_filler = location_number - item_number
+    total_items = len(itempool)
+    needed_filler = unfilled_locations - total_items
 
     itempool += [world.create_filler() for _ in range(needed_filler)]
 
     world.multiworld.itempool += itempool
 
     world.push_precollected(world.create_item(starting_fan))
+
+def generate_item_groups() -> dict[str, list[str]]:
+    item_groups: dict[str, list[str]] = {
+        "Fans": list(data.fans_items.keys()),
+        "Cousins": list(data.cousins_items.keys()),
+        "Presents": list(data.presents_items.keys()),
+        "Stars": list(data.filler_items.keys()),
+        "Traps": list(data.traps_items.keys()),
+    }
+
+    return item_groups
 

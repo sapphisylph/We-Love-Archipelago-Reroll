@@ -111,6 +111,3 @@ fans_and_cousins_logic = {
     "Tomio Hoshino": [],
     "Mutsuo Hoshino": []
 }
-
-for fan in fans_and_cousins_logic:
-    print(fan)
