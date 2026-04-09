@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using App.Katamari2;
 using HarmonyLib;
 using Il2CppSystem.Threading;
@@ -42,7 +44,7 @@ public class ForceCousinsToAppearPatch {
     public static readonly List<int> collectionLamour = [3411, 3451, 3491, 1703];
     public static readonly List<int> collectionDaisy = [3412, 3492, 1704];
     public static readonly List<int> collectionLucha = [3413, 1705];
-    public static readonly List<int> collectionMiki = [3414, 3494];
+    public static readonly List<int> collectionMiki = [3414, 3494, 1706];
     public static readonly List<int> collectionOdeon = [3415, 1707];
     public static readonly List<int> collectionCanCan = [3416, 3456, 3496, 1708];
     public static readonly List<int> collectionShy = [3417, 3497, 1709];
@@ -50,10 +52,11 @@ public class ForceCousinsToAppearPatch {
     public static readonly List<int> collectionDrooby = [3380, 1711, 3419];
     public static readonly List<int> collectionSignolo = [3500, 1712, 3420, 3460];
 
+
     // And a list of all the lists together to reference if all cousins should always appear
     public static List<List<int>> listOfCousinLists = [collectionPrince, collectionLalala, collectionNik, collectionAce, collectionJohnson, collectionVelvet, collectionFujio, collectionHavana, collectionPeso, collectionShikao, collectionOdeko, collectionHoney, collectionMarny, collectionKuro, collectionFoomin, collectionJune, collectionIchigo, collectionMarcy, collectionNjamo, collectionDipp, collectionOpeo, collectionNickel, collectionJungle, collectionMiso, collectionTwinkle, collectionHuey, collectionNutsuo, collectionBeyond, collectionKinoko, collectionMacho, collectionLamour, collectionDaisy, collectionLucha, collectionMiki, collectionOdeon, collectionCanCan, collectionShy, collectionSlip, collectionDrooby, collectionSignolo];
 
-    public static bool queueForceNewCousinsSpawn = false;
+    public static bool queueForceNewCousinsSpawn = true;
     public static List<int> recentlyReceivedFans = [];
     public static List<int> cousinsToForceIn = collectionPrince;
 
@@ -70,11 +73,11 @@ public class ForceCousinsToAppearPatch {
 
         if (queueForceNewCousinsSpawn) {
 
-            Plugin.BepinLogger.LogMessage("Adding new cousins to the collection...");
+            Plugin.LogDebug("Adding new cousins to the collection...");
 
             if (Plugin.cousinsAppearAnywhere) {
 
-                Plugin.BepinLogger.LogMessage("Setting cousins to appear anywhere...");
+                Plugin.LogDebug("Adding all cousins to the collection...");
                 foreach (List<int> list in listOfCousinLists) {
                     cousinsToForceIn.AddRange(list);
                 }
@@ -87,114 +90,114 @@ public class ForceCousinsToAppearPatch {
                         
                         case 0:
                             cousinsToForceIn.AddRange(collectionMacho);
-                            Plugin.BepinLogger.LogMessage("Rainbow Girl received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Rainbow Girl received! Adding cousins to the collection.");
                             break;
                         case 1:
                             cousinsToForceIn.AddRange(collectionCanCan);
                             cousinsToForceIn.AddRange(collectionHavana);
-                            Plugin.BepinLogger.LogMessage("Lazybones received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Lazybones received! Adding cousins to the collection.");
                             break;
                         case 2:
                             cousinsToForceIn.AddRange(collectionJohnson);
                             cousinsToForceIn.AddRange(collectionTwinkle);
                             cousinsToForceIn.AddRange(collectionKuro);
-                            Plugin.BepinLogger.LogMessage("Grandpa received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Grandpa received! Adding cousins to the collection.");
                             break;
                         case 3:
                             cousinsToForceIn.AddRange(collectionFoomin);
                             cousinsToForceIn.AddRange(collectionMiki);
                             cousinsToForceIn.AddRange(collectionVelvet);
-                            Plugin.BepinLogger.LogMessage("Grandma received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Grandma received! Adding cousins to the collection.");
                             break;
                         case 4:
                             cousinsToForceIn.AddRange(collectionShikao);
                             cousinsToForceIn.AddRange(collectionLucha);
                             cousinsToForceIn.AddRange(collectionNutsuo);
                             cousinsToForceIn.AddRange(collectionDrooby);
-                            Plugin.BepinLogger.LogMessage("Bird and Elephant received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Bird and Elephant received! Adding cousins to the collection.");
                             break;
                         case 6:
                             cousinsToForceIn.AddRange(collectionSlip);
                             cousinsToForceIn.AddRange(collectionAce);
-                            Plugin.BepinLogger.LogMessage("Soccer Kid received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Soccer Kid received! Adding cousins to the collection.");
                             break;
                         case 7:
                             cousinsToForceIn.AddRange(collectionIchigo);
-                            Plugin.BepinLogger.LogMessage("Ikebana Teacher received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Ikebana Teacher received! Adding cousins to the collection.");
                             break;
                         case 8:
                             cousinsToForceIn.AddRange(collectionMiso);
                             cousinsToForceIn.AddRange(collectionHuey);
-                            Plugin.BepinLogger.LogMessage("Subst. Teacher received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Subst. Teacher received! Adding cousins to the collection.");
                             break;
                         case 9:
                             cousinsToForceIn.AddRange(collectionOdeko);
-                            cousinsToForceIn.AddRange(collectionNickel);
                             cousinsToForceIn.AddRange(collectionShy);
-                            Plugin.BepinLogger.LogMessage("F1 Racer received! Adding cousins to the collection.");
+                            cousinsToForceIn.AddRange(collectionNickel);
+                            Plugin.LogDebug("F1 Racer received! Adding cousins to the collection.");
                             break;
                         case 10:
                             cousinsToForceIn.AddRange(collectionJune);
                             cousinsToForceIn.AddRange(collectionFujio);
-                            Plugin.BepinLogger.LogMessage("Rain Coat Girl received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Rain Coat Girl received! Adding cousins to the collection.");
                             break;
                         case 11:
                             cousinsToForceIn.AddRange(collectionBeyond);
                             cousinsToForceIn.AddRange(collectionNjamo);
-                            Plugin.BepinLogger.LogMessage("Dr. Katamari received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Dr. Katamari received! Adding cousins to the collection.");
                             break;
                         case 12:
                             cousinsToForceIn.AddRange(collectionOpeo);
-                            Plugin.BepinLogger.LogMessage("Crane Hat Boy received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Crane Hat Boy received! Adding cousins to the collection.");
                             break;
                         case 13:
                             cousinsToForceIn.AddRange(collectionMarcy);
                             cousinsToForceIn.AddRange(collectionPeso);
                             cousinsToForceIn.AddRange(collectionSignolo);
-                            Plugin.BepinLogger.LogMessage("Just-right Girl received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Just-right Girl received! Adding cousins to the collection.");
                             break;
                         case 14:
                             cousinsToForceIn.AddRange(collectionDaisy);
-                            Plugin.BepinLogger.LogMessage("Cowbear Farmer received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Cowbear Farmer received! Adding cousins to the collection.");
                             break;
                         case 15:
                             cousinsToForceIn.AddRange(collectionJungle);
-                            Plugin.BepinLogger.LogMessage("Excited Baby received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Excited Baby received! Adding cousins to the collection.");
                             break;
                         case 16:
                             cousinsToForceIn.AddRange(collectionLamour);
-                            Plugin.BepinLogger.LogMessage("F1 Racer received! Adding cousins to the collection.");
+                            Plugin.LogDebug("F1 Racer received! Adding cousins to the collection.");
                             break;
                         case 17:
                             cousinsToForceIn.AddRange(collectionOdeon);
-                            Plugin.BepinLogger.LogMessage("Fundraiser received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Fundraiser received! Adding cousins to the collection.");
                             break;
                         case 18:
                             cousinsToForceIn.AddRange(collectionHoney);
-                            Plugin.BepinLogger.LogMessage("Sweetsville received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Sweetsville received! Adding cousins to the collection.");
                             break;
                         case 19:
                             cousinsToForceIn.AddRange(collectionMarny);
-                            Plugin.BepinLogger.LogMessage("Float Boy received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Float Boy received! Adding cousins to the collection.");
                             break;
                         case 20:
                             cousinsToForceIn.AddRange(collectionKinoko);
-                            Plugin.BepinLogger.LogMessage("Camper Man received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Camper Man received! Adding cousins to the collection.");
                             break;
                         case 21:
                             cousinsToForceIn.AddRange(collectionNik);
-                            Plugin.BepinLogger.LogMessage("Sumo received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Sumo received! Adding cousins to the collection.");
                             break;
                         case 22:
                             cousinsToForceIn.AddRange(collectionLalala);
-                            Plugin.BepinLogger.LogMessage("Snow Child received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Snow Child received! Adding cousins to the collection.");
                             break;
                         case 23:
                             cousinsToForceIn.AddRange(collectionDipp);
-                            Plugin.BepinLogger.LogMessage("Bookworm received! Adding cousins to the collection.");
+                            Plugin.LogDebug("Bookworm received! Adding cousins to the collection.");
                             break;
                         default:
-                            Plugin.BepinLogger.LogMessage($"Received fan with ID {fanId} does not have any cousins natively in their level, so no cousins were added to the collection.");
+                            Plugin.LogDebug($"Received fan with ID {fanId} does not have any cousins natively in their level, so no cousins were added to the collection.");
                             break;
                     } 
 
@@ -203,12 +206,12 @@ public class ForceCousinsToAppearPatch {
             }
 
             foreach (int cousinId in cousinsToForceIn) {
-                Plugin.BepinLogger.LogMessage($"Forcing ID {cousinId} to 1.");
                 Game.mYm_SiGameSetMonoGet(cousinId, 1);   // Set each cousin ID to be in the collected state (1)
             }
 
             queueForceNewCousinsSpawn = false;  // make it not happen again until another fan is received
             recentlyReceivedFans = [];  // empty the list of received fans to make it not cycle through all of them again
+
 
         }
 

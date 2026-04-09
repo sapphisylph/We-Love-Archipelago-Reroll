@@ -1,7 +1,11 @@
-- Lock the fan shortcut UI
-- Force collection to always be spawned		
 - Make traps work
+- Figure out how to store info locally (music rando info, used traps) (just store it in a json file or something)
+- Change roll-up dialogue to show sent items
+- Royal Reverie
 - Allow clearing RUTS on first run
-- Skip cutscenes and tutorials (< about half-done)
-- Allow early cousins level
+- Make a way to reconnect while game is still loaded (Repurpose the Quit Game door?)
+- Collectionsanity
+- Skip cutscenes and tutorials (< skipped a few of them, but some remain)
+- Force collection to always be spawned	
+- Allow early cousins level (?)
 

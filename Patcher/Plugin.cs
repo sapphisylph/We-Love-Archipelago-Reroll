@@ -8,6 +8,8 @@ using HarmonyLib;
 using System.Collections.Generic;
 using BepInEx.Configuration;
 using App.Katamari2;
+using Il2CppSystem.Runtime.Remoting;
+using Archipelago.MultiClient.Net;
 // using WeLoveArchipelago.Utils;
 
 namespace WeLoveArchipelago;
@@ -46,7 +48,11 @@ public class Plugin : BasePlugin
     public static bool musicRandoEnabled = false;
     public static bool turnOffGPS = false;
     public static bool quickText = true;
+    public static bool debugLog = false;
+
+
     public static bool cousinsAppearAnywhere = false;
+
 
     public static string currentStage = "SceneMain";
     public static System.Random rand = new System.Random();
@@ -67,13 +73,9 @@ public class Plugin : BasePlugin
         ConfigEntry<string> password = Config.Bind("Archipelago", "password", "", "Room password. Only put something here if the room has a password set, otherwise leave blank.");
         musicRandoEnabled = Config.Bind("Aesthetics", "musicRando", false, "Shuffles all in-game music tracks with each other, both in and out of levels.").Value;
         turnOffGPS = Config.Bind("Aesthetics", "turnOffGPS", false, "Gets rid of the indicator that shows up when you cross a size barrier telling you where you're supposed to go.").Value;
-        quickText = Config.Bind("Aesthetics", "quickText", true, "Makes all King textboxes after a level one textbox long to speed up mashing.").Value;
+        quickText = Config.Bind("Aesthetics", "quickText", true, "Makes all King textboxes after a level one line long to speed up mashing.").Value;
+        debugLog = Config.Bind("Debug", "debugLog", false, "Logs additional messages to the console to help with debugging.").Value;
 
-        cousinsAppearAnywhere = Config.Bind("Temp", "cousinsAppearAnywhere", true, "Allows all cousins to appear in any levels they may be found in, even if their level hasn't been received yet. (Will eventually be made into a yaml option.)").Value;
-
-        if (cousinsAppearAnywhere) {
-            ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
-        }
 
 		// Connect to archipelago
 		APClient = new ArchipelagoClient();
@@ -96,15 +98,31 @@ public class Plugin : BasePlugin
             (musicRandoList[i], musicRandoList[count]) = (musicRandoList[count], musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
         }
 
+
+        // In order for certain cousins to spawn in on the first run, this range of mystery IDs needs to be registered in the collection.
+        // I'm just adding them to the queue here bc it's better for performance to only add them once, and it's easier to do that here
+
+        for (int i = 1485; i < 1500; i++) {     // TODO: Narrow this range further
+            LogDebug($"Adding ID {i}");
+            ForceCousinsToAppearPatch.cousinsToForceIn.Add(i);
+        }
+
         // Harmony.CreateAndPatchAll(typeof(TrapHandler));
         Harmony.CreateAndPatchAll(typeof(LocationCheckHandler));
         Harmony.CreateAndPatchAll(typeof(ReceivedItemHandler));
         Harmony.CreateAndPatchAll(typeof(Fun));
         Harmony.CreateAndPatchAll(typeof(QoL));
         Harmony.CreateAndPatchAll(typeof(ForceCousinsToAppearPatch));
+        Harmony.CreateAndPatchAll(typeof(DisableFanShortcutMenu));
 
         BepinLogger.LogMessage($"{ModDisplayInfo} was successfully loaded!");
 
+    }
+
+    public static void LogDebug(string message) {
+        if (debugLog) {
+            BepinLogger.LogMessage(message);
+        }
     }
 
     // private void OnGUI()
