@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using App.Katamari2;
 using HarmonyLib;
+using Il2CppSystem.Runtime.InteropServices;
 using Il2CppSystem.Threading;
 
 namespace WeLoveArchipelago.Patcher;
@@ -8,10 +9,7 @@ namespace WeLoveArchipelago.Patcher;
 public class QoL {
 
 
-    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaPresent1st)), HarmonyPrefix]
-    public static bool SkipPresentTutorial() {
-        return false;
-    }
+
 
     [HarmonyPatch(typeof(NextArrow), nameof(NextArrow.SetVisible)), HarmonyPrefix]
     public static bool TurnOffGPS(ref bool __0) {  // Disables the guide that appears at the top of the screen telling you how to go to the next area. I'll likely make this an optional setting, I just have an unreasonable disdain for this thing
@@ -43,25 +41,32 @@ public class QoL {
     //     return false;
     // }
 
-    // [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaAfterTutorial)), HarmonyPrefix]
-    // public static bool DontExplainWhatTheSelectMeadowIs(ref byte __result) {
-    //     __result = 1;
-    //     return false;
+    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaAfterTutorial)), HarmonyPrefix]
+    public static bool DontExplainWhatTheSelectMeadowIs(ref byte __result) {
+        __result = 1;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaMovie1st)), HarmonyPrefix]
+    public static bool DontShowTheKingsBackstory(ref byte __result) {
+        __result = 1;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaPresent1st)), HarmonyPrefix]
+    public static bool DontExplainWhatPresentsAre(ref byte __result) {
+        __result = 1;
+        return false;
+    }
+
+    
+
+    
+
+    // [HarmonyPatch(typeof(SelectHiroba_ShortcutController), nameof(SelectHiroba_ShortcutController.last_fan_index), MethodType.Getter), HarmonyPrefix]
+    // public static void PreventTheShortcutMenuFromBeingUsable() {
+    //     Plugin.LogDebug("Getter has been run.");
     // }
-
-    // [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaMovie1st)), HarmonyPrefix]
-    // public static bool DontShowTheKingsBackstory(ref byte __result) {
-    //     __result = 1;
-    //     return false;
-    // }
-
-    // [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoCheckHirobaPresent1st)), HarmonyPrefix]
-    // public static bool DontExplainWhatPresentsAre(ref byte __result) {
-    //     __result = 1;
-    //     return false;
-    // }
-
-
 
 }
    

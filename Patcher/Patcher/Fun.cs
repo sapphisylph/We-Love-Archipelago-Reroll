@@ -45,7 +45,7 @@ public class Fun {
         if (Plugin.musicRandoEnabled) {
             if (__instance.name == "Bgm") {     // Make it so it only randomizes music, not anything else that this function calls
                 __0 = Plugin.musicRandoList[__0];   // If the game tries to play music with ID of __0, make it play the randomized music track instead (with the ID in the __0th spot in the list)
-                Plugin.BepinLogger.LogMessage($"Music Rando: Playing music track with ID {__0}");
+                Plugin.LogDebug($"Music Rando: Playing music track with ID {__0}");
             }
         }
     }

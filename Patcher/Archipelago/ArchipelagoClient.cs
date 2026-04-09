@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Archipelago.MultiClient.Net;
@@ -13,7 +14,7 @@ namespace WeLoveArchipelago.Archipelago;
 
 public class ArchipelagoClient
 {
-    public const string APVersion = "0.6.6";
+    public const string APVersion = "0.6.7";
     private const string Game = "We Love Katamari Reroll";
 
     public static bool Authenticated;
@@ -101,6 +102,11 @@ public class ArchipelagoClient
             outText = $"Successfully connected to {ServerData.Uri} as {ServerData.SlotName}!";
 
             Plugin.BepinLogger.LogMessage(outText);
+
+            // Retrieve YAML settings from server 
+            Plugin.cousinsAppearAnywhere = (long) success.SlotData["enable_alternative_cousin_logic"] == 1;
+
+            
         }
         else
         {
@@ -134,13 +140,35 @@ public class ArchipelagoClient
         session.Socket.SendPacketAsync(new SayPacket { Text = message });
     }
 
-
+    public static List<int> checkedLocations = []; 
+    
 	public void SendCheck(int location) {
-        Plugin.BepinLogger.LogMessage($"Sending check: {location}");
-        try {
-		session.Locations.CompleteLocationChecks(location);
-        } catch (NullReferenceException e) {
-            Plugin.BepinLogger.LogError("Failed to send location check. The server may be down or you may have otherwise lost connection to the AP server. Check that the server is still running and reconnect. \n Full error message: \n" + e);
+
+        // Plugin.LogDebug("Checked Locations:");
+        // foreach (int i in checkedLocations) {
+        //     string j = $"{i}";
+        //     Plugin.LogDebug(j);
+        // }
+
+        if (!checkedLocations.Contains(location)) {
+
+            Plugin.LogDebug($"Sending check: {location}");
+            try {
+
+                session.Locations.CompleteLocationChecks(location);
+                checkedLocations.Add(location);  // Add the location to the list of cached locations so it doesn't try to send the same check 9 billion times
+                // The way this is implemented lets you reboot the game to try to re-send any checks that fail the first time
+
+            } catch (NullReferenceException e) {
+
+                Plugin.BepinLogger.LogError("Failed to send location check. The server may be down or you may have otherwise lost connection to the AP server. Check that the server is still running and reconnect. \n Full error message: \n" + e);    
+            
+            }
+
+        } else {
+
+            Plugin.LogDebug($"Check {location} was already sent.");
+        
         }
 	}
 
@@ -223,7 +251,7 @@ public class ArchipelagoClient
 
         else if (itemId >= Plugin.FAN_ID_OFFSET) {
             Plugin.fans.Add(itemId - Plugin.FAN_ID_OFFSET);
-            if (!(Plugin.cousinsAppearAnywhere)) {
+            if (!Plugin.cousinsAppearAnywhere) {
                 ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
                 ForceCousinsToAppearPatch.recentlyReceivedFans.Add(itemId - Plugin.FAN_ID_OFFSET);
             }
