@@ -1,6 +1,8 @@
 # We Love Archipelago Reroll
 An Archipelago implementation for We Love Katamari Reroll + Royal Reverie
+   
    APworld created by @sapphisylph
+   
    Plugin created by @zachamari
 
 ### Items
