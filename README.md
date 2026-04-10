@@ -1,9 +1,7 @@
 # We Love Archipelago Reroll
-An Archipelago implementation for We Love Katamari Reroll + Royal Reverie
-   
-   APworld created by @sapphisylph
-   
-   Plugin created by @zachamari
+An [Archipelago](https://archipelago.gg/) implementation for We Love Katamari Reroll + Royal Reverie
+   - APworld created by @sapphisylph
+   - Plugin created by @zachamari
 
 ### Items
 - Fans
@@ -16,6 +14,9 @@ An Archipelago implementation for We Love Katamari Reroll + Royal Reverie
 - Present and Cousin roll-ups
 - Super Clears (optional)
 - Shooting Stars (optional)
+
+### Goal
+Currently, the goal is to complete every main level, then complete Roll Up the Sun. Each level is locked behind its respective fan (including Roll Up the Sun, which is locked behind Dog), so you must receive every fan from the multiworld in order to goal (except Tomio Hoshino because he's normally postgame).
 
 
 ## Setup Guide
@@ -44,3 +45,4 @@ The apworld and plugin for WLKRR can be found in the [releases](https://github.c
 - The fan selection menu in the Select Meadow doesn't update with receiving fans, so you will be automatically booted out of the menu if you try to open it to prevent being able to play the entire game out-of-logic
 - Roll Up the Sun is currently impossible to clear on the first playthrough. The first failure is scripted to happen even if you already completed every level and rolled up enough stars to beat the level, so you'll have to play the level twice in order to goal.
 - Super Clear and Shooting Star checks are sent on the results screen, while the level clear check is sent immediately upon winning, so don't panic if all the checks don't send immediately!
+- We haven't found a way to allow playing any given fan's stages out of order yet, so you need to play them in the intended order currently (i.e. you have to play ALAP1 in order to play AFAP1, you need to finish Small Campfire in order to do Medium in order to do Large, etc.). This doesn't have any effect on progression across fans (i.e. you don't need to play ALAP1 in order to play ALAP2).
