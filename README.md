@@ -1,8 +1,23 @@
-# We-Love-Archipelago-Reroll
-An Archipelago Multiworld Randomizer implementation for We Love Katamari Reroll + Royal Reverie
+# We Love Archipelago Reroll
+An Archipelago implementation for We Love Katamari Reroll + Royal Reverie
+   APworld created by @sapphisylph
+   Plugin created by @zachamari
+
+### Items
+- Fans
+- Cousins
+- Presents
+- Stardust
+
+### Locations
+- Level Clears
+- Present and Cousin roll-ups
+- Super Clears (optional)
+- Shooting Stars (optional)
+
 
 ## Setup Guide
-If you're unfamiliar with Archipelago, refer to [the Archipelago setup guide](https://archipelago.gg/tutorial/Archipelago/setup_en) for how to generate and host a randomized multiworld. 
+If you're new to Archipelago, refer to [the Archipelago setup guide](https://archipelago.gg/tutorial/Archipelago/setup_en) for how to generate and host a randomized multiworld. 
 The apworld and plugin for WLKRR can be found in the [releases](https://github.com/sapphisylph/We-Love-Archipelago-Reroll/releases/latest/).
 
 ### Mod Installation
@@ -23,4 +38,7 @@ The apworld and plugin for WLKRR can be found in the [releases](https://github.c
 - If you get disconnected mid-game, there is currently no way to reconnect while the game is running, so you'll have to close and reopen the game to reconnect to the server.
 
 ## Known Issues
-// Fill Out Later
+- The Select Meadow only updates received fans and cousins upon reload. If you receive an item while in the Select Meadow, you can reload it by entering and exiting the Favorite Music menu, the Collection, or any level.
+- The fan selection menu in the Select Meadow doesn't update with receiving fans, so you will be automatically booted out of the menu if you try to open it to prevent being able to play the entire game out-of-logic
+- Roll Up the Sun is currently impossible to clear on the first playthrough. The first failure is scripted to happen even if you already completed every level and rolled up enough stars to beat the level, so you'll have to play the level twice in order to goal.
+- Super Clear and Shooting Star checks are sent on the results screen, while the level clear check is sent immediately upon winning, so don't panic if all the checks don't send immediately!
