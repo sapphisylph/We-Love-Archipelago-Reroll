@@ -40,6 +40,9 @@ The apworld and plugin for WLKRR can be found in the [releases](https://github.c
    - Note: This plugin may mess up existing save files if you load into them with the plugin active. If you have any saves that you care about, uninstall the plugin before opening them (and if you accidentally open an existing save with the plugin installed, you should force-close the game before it has a chance to save).
 - If you get disconnected mid-game, there is currently no way to reconnect while the game is running, so you'll have to close and reopen the game to reconnect to the server.
 
+### Uninstallation
+To uninstall the mod, all you need to do is remove the WeLoveArchipelago folder from `C:\Program Files (x86)\Steam\steamapps\common\WLKRR\BepInEx\plugins`
+
 ## Known Issues
 - The Select Meadow only updates received fans and cousins upon reload. If you receive an item while in the Select Meadow, you can reload it by entering and exiting the Favorite Music menu, the Collection, or any level.
 - The fan selection menu in the Select Meadow doesn't update with receiving fans, so you will be automatically booted out of the menu if you try to open it to prevent being able to play the entire game out-of-logic.
