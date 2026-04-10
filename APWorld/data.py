@@ -153,12 +153,13 @@ def get_cousins_logic(world: WeLoveKatamariRerollWorld) -> dict[str, list[str]]:
         cousins_logic["Just-Right Girl"].append("Nutsuo")
         cousins_logic["Cowbear Farmer"].append("Njamo")
         cousins_logic["Excited Baby"].append("June")
-        cousins_logic["Cleanly Mom"].extend(["Kuro", "Havana", "Nickel"])
+        cousins_logic["Cleanly Mom"].extend(["Kuro", "Havana", "Nickel", "Honey"])
         cousins_logic["Fund-raiser"].extend(["Twinkle", "Opeo", "Ichigo", "Can-Can", "Slip"])
         cousins_logic["Float Boy"].append("Foomin")
         cousins_logic["Mini-Sumo"].extend(["Kinoko", "Miso", "The Prince", "Slip"])
         cousins_logic["Snow Child"].append("L'Amour")
         cousins_logic["Book Worm"].extend(["Marny"])
+        cousins_logic["Bird & Elephant"].append("The Prince")
 
     return cousins_logic
 
@@ -965,10 +966,10 @@ fans_items = {
         "ID": 26 + fans_offset,
         "classification": ItemClassification.progression
     },
-    "Mutsuo Hoshino": {
-        "ID": 27 + fans_offset,
-        "classification": ItemClassification.progression
-    }
+#    "Mutsuo Hoshino": {
+#        "ID": 27 + fans_offset,
+#        "classification": ItemClassification.progression
+#    }
 }
 
 cousins_offset = item_offset_ids["Cousins"]

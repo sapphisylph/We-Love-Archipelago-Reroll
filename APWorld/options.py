@@ -77,36 +77,31 @@ class EnableShootingStars(Toggle):
 
     display_name = "Enable Shooting Stars"
 
-class EnableSuperClears(Toggle):
+class EnableSuperClears(Choice):
     """
     Exceeding the fans expectations counts as a super clear!
     Receiving this praise from the King and the Fans sends out a check.
-    Adds 19, 33, or 41 more checks to the game, depending on the next two options.
+
+    'disabled' turns off super clears
+
+    'base_level' enables the easiest base super clears in the game.
+     This includes size requirements, simple collection levels, and automatic successes. Adds 19 checks
+
+    'challenging' enables base_level checks as well as more challenging super clears.
+    This includes speed requirements and more difficult and complex collection level requirements. Adds 32 checks
+
+    'difficult' enables base_level checks, challenging checks, as well as the most difficult super clears, requiring the most dedication to complete.
+    This includes the Cowbear, Cranes, the Just-Right stages, and very hard speed challenges. Adds 40 Checks
     """
 
     display_name = "Enable Super Clears"
 
-class EnableChallengingSuperClears(Toggle):
-    """
-    Certain super clears are more challenging, requiring knowledge of the layout of items, or a specific route to take.
-    These include, but are not limited to: As Fast As Possible levels and more difficult collection levels.
-    Adds 14 checks
+    option_disabled = 0
+    option_base_level = 1
+    option_challenging = 2
+    option_difficult = 3
 
-    NOTE: Requires Super Clears to be enabled.
-    """
-
-    display_name = "Enable Challenging Super Clears"
-
-class EnableDifficultSuperClears(Toggle):
-    """
-    Some super clears are incredibly difficult, being inconsistent for even skilled players
-    These include: Cowbear, 1000 cranes, Fast Friends, Fast Underwater, Cleaning, and the Just-Right stages.
-    Adds 8 checks
-
-    NOTE: Requires Super Clears and Challenging Super Clears to be enabled.
-    """
-
-    display_name = "Enable Difficult Super Clears"
+    default = option_disabled
 
 class EnableAlternativeCousinLogic(Toggle):
     """
@@ -119,18 +114,6 @@ class EnableAlternativeCousinLogic(Toggle):
 
     display_name = "Enable Alternative Cousin Logic"
 
-class EnableDuplicates(Toggle):
-    """
-    Instead of placing one of each fan into the multiworld, it places two of each fan into the multiworld.
-    This is purely for quality of life purposes, allowing fewer opportunities to be locked behind super late spheres.
-
-    NOTE: If you enable this option and max out the cousins and presents to be added to the itempool, there's a chance there won't be
-    enough checks for the amount of items that is needed to generate.
-    To compensate for this, it will randomly remove an amount of presents and cousins equal to the excess amount of items.
-    """
-
-    display_name = "Enable Duplicates"
-    visibility = Visibility.none
 
 @dataclass
 class WeLoveKatamariRerollOptions(PerGameCommonOptions):
@@ -140,10 +123,7 @@ class WeLoveKatamariRerollOptions(PerGameCommonOptions):
     present_amount: PresentAmount
     enable_shooting_stars: EnableShootingStars
     enable_super_clears: EnableSuperClears
-    enable_challenging_super_clears: EnableChallengingSuperClears
-    enable_difficult_super_clears: EnableDifficultSuperClears
     enable_alternative_cousin_logic: EnableAlternativeCousinLogic
-    enable_duplicates: EnableDuplicates
 
 option_groups = [
     OptionGroup(
@@ -153,9 +133,6 @@ option_groups = [
             EnableAlternativeCousinLogic,
             EnableShootingStars,
             EnableSuperClears,
-            EnableChallengingSuperClears,
-            EnableDifficultSuperClears,
-            EnableDuplicates,
         ],
     ),
     OptionGroup(
