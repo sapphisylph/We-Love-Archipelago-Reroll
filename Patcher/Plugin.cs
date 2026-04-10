@@ -19,7 +19,7 @@ public class Plugin : BasePlugin
 {
     public const string PluginGUID = "com.Zachamari.WeLoveArchipelago";
     public const string PluginName = "WeLoveArchipelago";
-    public const string PluginVersion = "0.0.2";
+    public const string PluginVersion = "0.1.0";
 
     public const string ModDisplayInfo = $"{PluginName} v{PluginVersion}";
     private const string APDisplayInfo = $"Archipelago v{ArchipelagoClient.APVersion}";
@@ -54,7 +54,7 @@ public class Plugin : BasePlugin
     public static bool cousinsAppearAnywhere = false;
 
 
-    public static string currentStage = "SceneMain";
+    public static string currentStage = "Result";
     public static System.Random rand = new System.Random();
 
     public override void Load()
