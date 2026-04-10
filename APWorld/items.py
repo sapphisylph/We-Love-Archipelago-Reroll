@@ -42,23 +42,10 @@ def create_all_items(world: WeLoveKatamariRerollItem) -> None:
             starting_fan = fan
             continue
         itempool.append(world.create_item(fan))
-        if bool(world.options.enable_duplicates.value):
-            itempool.append(world.create_item(fan))
 
     cousins_to_add = world.random.sample(list(data.cousins_items), world.options.cousin_amount)
     presents_to_add = world.random.sample(list(data.list_of_presents), world.options.present_amount)
-    total_cosmetics = len(cousins_to_add) + len(presents_to_add)
-    total_items = len(itempool) + total_cosmetics
     unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))
-
-    if total_items > unfilled_locations:
-        for i in range(0, total_items - unfilled_locations):
-            random_value = world.random.randint(0, total_cosmetics - 1)
-            if random_value < len(cousins_to_add):
-                cousins_to_add.pop(random_value)
-            else:
-                presents_to_add.pop(random_value - len(cousins_to_add))
-            total_cosmetics = len(cousins_to_add) + len(presents_to_add)
 
     if "Ace" not in cousins_to_add:
         cousins_to_add[world.random.randint(0, len(cousins_to_add) - 1)] = "Ace"

@@ -34,12 +34,15 @@ def create_regular_locations(world: WeLoveKatamariRerollWorld) -> None:
             location_to_add = get_location_names_with_ids([location_name])
             current_region.add_locations(location_to_add, WeLoveKatamariRerollLocation)
 
-    if bool(world.options.enable_super_clears):
+    if world.options.enable_super_clears.value > 0:
         super_clears_to_add = data.super_clear_tier_1_locations
-        if bool(world.options.enable_challenging_super_clears):
+
+        if world.options.enable_super_clears.value > 1:
             super_clears_to_add.update(data.super_clear_tier_2_locations)
-            if bool(world.options.enable_difficult_super_clears):
+
+            if world.options.enable_super_clears.value > 2:
                 super_clears_to_add.update(data.super_clear_tier_3_locations)
+
         for location_name in list(super_clears_to_add):
             current_region = world.get_region(super_clears_to_add[location_name]["region"])
             location_to_add = get_location_names_with_ids([location_name])

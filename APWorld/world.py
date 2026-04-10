@@ -1,5 +1,3 @@
-from collections.abc import Mapping
-from typing import Any
 from worlds.AutoWorld import World
 
 from . import locations, items, regions, rules, webworld, data
@@ -37,8 +35,7 @@ class WeLoveKatamariRerollWorld(World):
     def get_filler_item_name(self) -> str:
         return items.get_random_filler_item_name(self)
 
-    def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.options.as_dict(
-            "enable_alternative_cousin_logic"
-        )
-
+    def fill_slot_data(self):
+        return {
+            "enable_alternative_cousin_logic": self.options.enable_alternative_cousin_logic.value,
+        }

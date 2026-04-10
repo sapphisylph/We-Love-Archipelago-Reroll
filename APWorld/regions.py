@@ -16,6 +16,8 @@ def create_all_regions(world: WeLoveKatamariRerollWorld) -> None:
     regions = [Region("Select Meadow", world.player, world.multiworld)]
 
     for fan in data.list_of_fans:
+        if fan == "Mutsuo Hoshino":
+            continue
         regions.append(Region(fan, world.player, world.multiworld))
 
     for cousin in data.list_of_cousins:
@@ -29,6 +31,8 @@ def connect_regions(world: WeLoveKatamariRerollWorld) -> None:
     cousins_logic = data.get_cousins_logic(world)
 
     for fan in cousins_logic:
+        if fan == "Mutsuo Hoshino":
+            continue
         fan_region = world.get_region(fan)
         select_meadow.connect(fan_region, f"{fan} Open in Select Meadow")
         for cousin in set(cousins_logic[fan]):
