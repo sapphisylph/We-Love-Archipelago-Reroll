@@ -50,6 +50,8 @@ class StartingLevel(Choice):
 class CousinAmount(Range):
     """
     How many cousins should be randomized into the item pool?
+
+    NOTE: Due to Ace being required to roll up Slip in the tutorial, Ace will always be included in this pool.
     """
 
     display_name = "Cousin Amount"
@@ -71,7 +73,9 @@ class PresentAmount(Range):
 
 class EnableShootingStars(Toggle):
     """
-    Enables the ability for shooting stars to send checks.
+    Completing any of the main levels with exceptional speed causes a star to shoot down from the sky.
+    With this enabled, creating these shooting stars sends out checks.
+
     Adds 10 checks.
     """
 
@@ -80,12 +84,12 @@ class EnableShootingStars(Toggle):
 class EnableSuperClears(Choice):
     """
     Exceeding the fans expectations counts as a super clear!
-    Receiving this praise from the King and the Fans sends out a check.
+    With this enabled, receiving this praise from the King and the Fans sends out a check.
 
     'disabled' turns off super clears
 
-    'base_level' enables the easiest base super clears in the game.
-     This includes size requirements, simple collection levels, and automatic successes. Adds 19 checks
+    'base_level' enables the easier to complete base super clears in the game.
+    This includes size requirements, simple collection levels, and automatic successes. Adds 19 checks
 
     'challenging' enables base_level checks as well as more challenging super clears.
     This includes speed requirements and more difficult and complex collection level requirements. Adds 32 checks
