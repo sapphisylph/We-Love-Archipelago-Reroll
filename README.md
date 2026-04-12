@@ -28,7 +28,7 @@ The apworld and plugin for WLKRR can be found in the [releases](https://github.c
    - Under the "Artifacts" tab, open the most recent dropdown menu and download the version labeled *"BepInEx Unity (IL2CPP) for Windows (x64) games"*.
    - Note: If you're on Linux, you'll need to run the game through Wine, so you should still use the Windows version.
 2. Extract the contents of the bepinex .zip directly into the WLKRR folder (same folder as the game's .exe file). By default on Windows, this folder is located at `C:\Program Files (x86)\Steam\steamapps\common\WLKRR`.
-3. Download the plugin from the [releases](https://github.com/sapphisylph/We-Love-Archipelago-Reroll/releases/latest/) and extract the contents of the .zip into `...\WLKRR\BepInEx\plugins`.
+3. Download the plugin (.zip file) from the [releases](https://github.com/sapphisylph/We-Love-Archipelago-Reroll/releases/latest/) and extract the contents of the .zip into `...\WLKRR\BepInEx\plugins`.
 4. *(Linux only)* Add `WINEDLLOVERRIDES="winhttp.dll=n,b" %command%` to the launch options on Steam, under properties.  (< taken from the OUAK setup guide, currently untested for WLKRR)
 5. Launch the game. If everything worked, some logs should be displayed by the plugin in the console window. This will also create a config file for you to put your connection info once the multiworld is created.
 
