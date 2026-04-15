@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using App.Katamari2;
 using HarmonyLib;
 using Il2CppSystem.Runtime.InteropServices;
@@ -24,11 +26,22 @@ public class QoL {
 
     [HarmonyPatch(typeof(UIOusamaMessage), nameof(UIOusamaMessage.DecodeText)), HarmonyPrefix]
     public static void ShortenText(ref string __0) {
+        
+        Plugin.LogDebug($"Playing King dialogue: \n{__0}");
+
+        if (Plugin.showNewRollCheckDialogue) {
+            __0 = Plugin.rollCheckDialogue;
+            Plugin.showNewRollCheckDialogue = false;
+            return;
+        }
+        
         if (Plugin.quickText) {
             if (Plugin.currentStage == "Result") {
-                __0 = fillerDialogue[Plugin.rand.Next(fillerDialogue.Length - 1)];  // Take a random entry from the array
+                __0 = fillerDialogue[Plugin.rand.Next(fillerDialogue.Length - 1)];  // Take a random entry from the array and use that as the dialogue instead
+                return;
             }
         }
+
     }
 
 
