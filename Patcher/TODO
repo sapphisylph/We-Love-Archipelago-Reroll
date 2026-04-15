@@ -1,11 +1,12 @@
-- Make traps work
-- Figure out how to store info locally (music rando info, used traps) (just store it in a json file or something)
-- Change roll-up dialogue to show sent items
+- Make a way to reconnect while game is still loaded (Repurpose the Quit Game door?)
+- Figure out how to store info locally (music rando info, used traps, sent checks maybe) (just store it in a json file or something)
+- Make other traps work
 - Royal Reverie
 - Allow clearing RUTS on first run
-- Make a way to reconnect while game is still loaded (Repurpose the Quit Game door?)
 - Collectionsanity
 - Skip cutscenes and tutorials (< skipped a few of them, but some remain)
 - Force collection to always be spawned	
 - Allow early cousins level (?)
+- Make orange text bubbles not send checks 
+    - ie in Limited to 50, getting the "Your first rest stop" dialogue sends the present check early
 

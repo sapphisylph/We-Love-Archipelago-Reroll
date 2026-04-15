@@ -11,19 +11,6 @@ public class LocationCheckHandler {
 
 
 
-    // Upon stage load, store the name of the stage the player has entered for referencing below
-    [HarmonyPatch(typeof(AssetLoader), nameof(AssetLoader.LoadSceneAsync), new Type[] { typeof(string), typeof(bool) }), HarmonyPostfix]
-    public static void SetCurrentStage(string sceneName, bool isAdditive) {
-        Plugin.currentStage = sceneName;
-        Plugin.LogDebug($"Scene loaded: {sceneName}");
-    } 
-
-    // The above function doesn't detect returning to the meadow from the pause menu, so I have to do that separately
-    [HarmonyPatch(typeof(Game_Pause), nameof(Game_Pause.sToSelect)), HarmonyPostfix]
-    public static void DetectReturnToMeadow() {
-        Plugin.currentStage = "Result";
-        Plugin.LogDebug($"Returning to select meadow...");
-    } 
 
 
 
@@ -708,7 +695,7 @@ public class LocationCheckHandler {
 
         if (Plugin.currentStage == "Result") {
             return; // Don't bother trying to send checks if in the select meadow
-        } 
+        }
 
         // For some reason, rolling up the Prince doesn't use the same function as every other cousin, so I just detect the raw item roll-up instead
         if (_code == 3381 || _code == 3421 || _code == 3461) {  // Listing these out manually instead of referencing the list in ForceCousinsToAppearPatch because I feel like it'd hurt performance to run a function on the same list of 3 items every time an item is rolled up    

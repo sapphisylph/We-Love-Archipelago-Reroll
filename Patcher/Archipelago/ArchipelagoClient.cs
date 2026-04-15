@@ -6,8 +6,10 @@ using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
+using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
 using WeLoveArchipelago.Patcher;
+using System.Threading.Tasks;
 // using WeLoveArchipelago.Utils;
 
 namespace WeLoveArchipelago.Archipelago;
@@ -106,6 +108,15 @@ public class ArchipelagoClient
             // Retrieve YAML settings from server 
             Plugin.cousinsAppearAnywhere = (long) success.SlotData["enable_alternative_cousin_logic"] == 1;
 
+            // Stole this bit from Hollow Knight's AP, sorry :p
+            // This is used to get all of the slot's location data and store it for later
+            Plugin.LogDebug("Scouting locations...");
+            Task<Dictionary<long, ScoutedItemInfo>> scoutTask = session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray());
+            scoutTask.Wait();
+            Plugin.LogDebug("Locations scouted!");
+            Dictionary<long, ScoutedItemInfo> scoutResult = scoutTask.Result;
+                
+            ProcessScoutedLocationData(scoutResult);
             
         }
         else
@@ -122,6 +133,32 @@ public class ArchipelagoClient
 
         Plugin.BepinLogger.LogMessage(outText);
         attemptingConnection = false;
+    }
+
+
+    public static Dictionary<int, List<string>> scoutedLocations = new Dictionary<int, List<string>>();
+
+    public static void ProcessScoutedLocationData(Dictionary<long, ScoutedItemInfo> scoutResult){
+        
+        foreach (KeyValuePair<long, ScoutedItemInfo> scout in scoutResult)
+        {
+            try {
+
+                int locationId = (int) scout.Key;   // I store it as an int here bc the location sending function uses integers and quite frankly I don't want to bother changing all that for a likely unnoticeable decrease in memory usage. Maybe later if I need to optimize it better
+                Plugin.LogDebug($"Processing scouted location data for location {locationId}...");
+                ScoutedItemInfo item = scout.Value;
+                string itemName = item.ItemName ?? $"?Item {item.ItemId}";
+                string receivingPlayer = item.Player.Alias ?? "Someone";
+                string receivingGame = item.Player.Game ?? "Unknown Game";
+                string itemClass = item.Flags.ToString() ?? "None";
+                string isLocalItem = item.IsReceiverRelatedToActivePlayer.ToString();
+                List<string> scoutedItemData = [itemName, itemClass, receivingPlayer, receivingGame, isLocalItem];
+                scoutedLocations.Add(locationId, scoutedItemData);  // Store all the above information in a list that can be called using the location ID
+
+            } catch (Exception e) {
+                Plugin.LogDebug($"Error while collecting scouted location data! \n{e}");
+            }
+        }
     }
 
     /// <summary>
@@ -149,15 +186,23 @@ public class ArchipelagoClient
         //     string j = $"{i}";
         //     Plugin.LogDebug(j);
         // }
+    
+
+        if (location > 100 && location < 300) { // If the check is a present or cousin, create the new King dialogue and set it to appear
+            Fun.CreateKingRollUpDialogue(location); // This runs every attempted check so that the custom dialogue still appears on repeat playthroughs
+        }
+
 
         if (!checkedLocations.Contains(location)) {
 
             Plugin.LogDebug($"Sending check: {location}");
+
             try {
 
                 session.Locations.CompleteLocationChecks(location);
                 checkedLocations.Add(location);  // Add the location to the list of cached locations so it doesn't try to send the same check 9 billion times
                 // The way this is implemented lets you reboot the game to try to re-send any checks that fail the first time
+
 
             } catch (NullReferenceException e) {
 
@@ -206,25 +251,25 @@ public class ArchipelagoClient
             // Trap stuff (currently broken)
 
 
-                // if (itemId >= Plugin.TRAP_ID_OFFSET) {
+                if (itemId >= Plugin.TRAP_ID_OFFSET) {
 
-                //     int trapId = itemId - Plugin.TRAP_ID_OFFSET;
+                    int trapId = itemId - Plugin.TRAP_ID_OFFSET;
 
                     // TODO: Put these into a queue rather than letting them sit here
 
-                //     if (trapId == 0) {
-                //         TrapHandler.TriggerDialogueTrap();
-                //     } else if (trapId == 1) {
-                //         TrapHandler.WishYouWereHere((byte)Plugin.rand.Next(7)); // choose a random number from 0 to 7, and trigger that photo frame to appear (i made this function use bytes bc lower memory requirements, that's why the (byte) is there)
-                //     } else if (trapId == 2) {
-                //         // Time Stop Trap
-                //     } else if (trapId == 3) {
-                //         // UI Loss Trap
-                //     } else {
-                //         Plugin.BepinLogger.LogMessage($"Received trap {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
-                //     }
-                // }
-                // else
+                    if (trapId == 0) {
+                        TrapHandler.QueueDialogueTrap();
+                    } else if (trapId == 1) {
+                        TrapHandler.QueueWishYouWereHere(); 
+                    } else if (trapId == 2) {
+                        // Time Stop Trap
+                    } else if (trapId == 3) {
+                        // UI Loss Trap
+                    } else {
+                        Plugin.BepinLogger.LogMessage($"Received trap {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+                    }
+                }
+                else
 
         if (itemId >= Plugin.FILLER_ID_OFFSET) {
 
