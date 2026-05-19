@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-
 namespace WeLoveArchipelago.Utils;
 
 public class ReadFiles {
@@ -26,11 +25,11 @@ public class ReadFiles {
 
         string[] descriptionFiles = Directory.GetFiles("BepInEx/plugins/WeLoveArchipelago/KingItemDescriptions");
 
-        if (descriptionFiles != null) {
+        if (descriptionFiles.Length != 0) {
 
             foreach (string filePath in descriptionFiles) {
                 
-                if (!filePath.EndsWith(".json")) { return; }    // Skip any files that aren't .json format
+                if (!filePath.EndsWith(".json")) { continue; }    // Skip any files that aren't .json format
 
                 try {
 
@@ -49,66 +48,73 @@ public class ReadFiles {
 
                     } 
 
-                    foreach (var item in gameDescriptions.items) {
-                        
-                        foreach (string name in item.item_names) {
+                    if (gameDescriptions.items != null) {
+                        foreach (var item in gameDescriptions.items) {
+                            
+                            foreach (string name in item.item_names) {
 
-                            gameDescriptions.descriptionsByItem[name] = item.descriptions;
+                                gameDescriptions.descriptionsByItem[name] = item.descriptions;
 
-                            if (item.item_color != null) {
+                                if (item.item_color != null) {
 
-                                gameDescriptions.colorsByItem[name] = item.item_color.Value;
+                                    gameDescriptions.colorsByItem[name] = item.item_color.Value;
 
+                                }
                             }
-                        }
 
+                        }
                     }
 
                     itemDescriptions.Add(game, gameDescriptions.descriptionsByItem);
                     itemColors.Add(game, gameDescriptions.colorsByItem);
 
-                    
-                    
                 } catch (Exception e) {
                     Plugin.BepinLogger.LogError($"Failed to parse item descriptions JSON located at {filePath}. Check that your JSON formatting is correct. \nCaught exception: \n{e}");
                 }
                 
             }
 
-            // Force-populate the dictionaries for unknown items in case the player deleted the unknown json files (or in case I forget to make them)
+            Plugin.LogDebug("Finished adding files.");
 
-            List<string> defaultProgression = ["important thing", "purple-named thing", "unwall", "progression thing", "critical thing"];
-            List<string> defaultUseful = ["helpful thing", "dark blue-named thing", "utility", "useful thing", "nice-to-have thing"];
-            List<string> defaultTrap = ["problematic thing", "red-named thing", "setback", "trap-like thing", "awful thing"];
-            List<string> defaultFiller = ["pointless thing", "light blue-named thing", "filler", "probably-useless thing", "common thing"];
-            
-            // If any individual item class is missing, add it back in
-            if (!itemDescriptions.ContainsKey("Unknown (Progression)")) {    
-                Dictionary<string, List<string>> defaultProgressionDescriptions = new Dictionary<string, List<string>>();
-                defaultProgressionDescriptions["default_unknown"] = defaultProgression;
-                itemDescriptions.Add("Unknown (Progression)", defaultProgressionDescriptions);
-                // The second dictionaries need to be valid defined dictionaries, which makes this code a bit ugly with how I currently have it written, but whatever
-                // I should probably rewrite this at some point to make "Unknown" be the game name and the item classes be the items, but I'm too deep into it now to turn back, so whatever
-            }
+        }
 
-            if (!itemDescriptions.ContainsKey("Unknown (Useful)")) {
-                Dictionary<string, List<string>> defaultUsefulDescriptions = new Dictionary<string, List<string>>();
-                defaultUsefulDescriptions["default_unknown"] = defaultUseful;
-                itemDescriptions.Add("Unknown (Useful)", defaultUsefulDescriptions);
-            }
+        // Force-populate the dictionaries for unknown items in case the player deleted the unknown json files (or in case I forget to make them)
 
-            if (!itemDescriptions.ContainsKey("Unknown (Trap)")) {
-                Dictionary<string, List<string>> defaultTrapDescriptions = new Dictionary<string, List<string>>();
-                defaultTrapDescriptions["default_unknown"] = defaultTrap;
-                itemDescriptions.Add("Unknown (Trap)", defaultTrapDescriptions);
-            }
+        List<string> defaultProgression = ["important thing", "purple-named thing", "unwall", "progression thing", "critical thing"];
+        List<string> defaultUseful = ["helpful thing", "dark blue-named thing", "utility", "useful thing", "nice-to-have thing"];
+        List<string> defaultTrap = ["problematic thing", "red-named thing", "setback", "trap-like thing", "awful thing"];
+        List<string> defaultFiller = ["pointless thing", "light blue-named thing", "filler", "probably-useless thing", "common thing"];
+        
 
-            if (!itemDescriptions.ContainsKey("Unknown (Filler)")) {
-                Dictionary<string, List<string>> defaultFillerDescriptions = new Dictionary<string, List<string>>();
-                defaultFillerDescriptions["default_unknown"] = defaultFiller;
-                itemDescriptions.Add("Unknown (Filler)", defaultFillerDescriptions);
-            }
+        // If any individual item class is missing, add it back in
+        if (!itemDescriptions.ContainsKey("Unknown (Progression)")) {   
+            Plugin.LogDebug("Adding default progression..."); 
+            Dictionary<string, List<string>> defaultProgressionDescriptions = new Dictionary<string, List<string>>();
+            defaultProgressionDescriptions["default_unknown"] = defaultProgression;
+            itemDescriptions.Add("Unknown (Progression)", defaultProgressionDescriptions);
+            // The second dictionaries need to be valid defined dictionaries, which makes this code a bit ugly with how I currently have it written, but whatever
+            // I should probably rewrite this at some point to make "Unknown" be the game name and the item classes be the items, but I'm too deep into it now to turn back, so whatever
+        }
 
+        if (!itemDescriptions.ContainsKey("Unknown (Useful)")) {
+            Plugin.LogDebug("Adding default useful..."); 
+            Dictionary<string, List<string>> defaultUsefulDescriptions = new Dictionary<string, List<string>>();
+            defaultUsefulDescriptions["default_unknown"] = defaultUseful;
+            itemDescriptions.Add("Unknown (Useful)", defaultUsefulDescriptions);
+        }
+
+        if (!itemDescriptions.ContainsKey("Unknown (Trap)")) {
+            Plugin.LogDebug("Adding default traps..."); 
+            Dictionary<string, List<string>> defaultTrapDescriptions = new Dictionary<string, List<string>>();
+            defaultTrapDescriptions["default_unknown"] = defaultTrap;
+            itemDescriptions.Add("Unknown (Trap)", defaultTrapDescriptions);
+        }
+
+        if (!itemDescriptions.ContainsKey("Unknown (Filler)")) {
+            Plugin.LogDebug("Adding default filler..."); 
+            Dictionary<string, List<string>> defaultFillerDescriptions = new Dictionary<string, List<string>>();
+            defaultFillerDescriptions["default_unknown"] = defaultFiller;
+            itemDescriptions.Add("Unknown (Filler)", defaultFillerDescriptions);
         }
 
         
@@ -126,11 +132,11 @@ public class ReadFiles {
 
         string[] textTrapFiles = Directory.GetFiles("BepInEx/plugins/WeLoveArchipelago/TextTraps");
 
-        if (textTrapFiles != null) {    // TODO: This check doesn't actually work, make it work properly
+        if (textTrapFiles.Length != 0) {    
 
             foreach (string filePath in textTrapFiles) {
                 
-                if (!filePath.EndsWith(".txt")) { return; }    // Skip any files that aren't .txt format
+                if (!filePath.EndsWith(".txt")) { continue; }    // Skip any files that aren't .txt format
 
                 try {
 

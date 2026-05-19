@@ -78,7 +78,7 @@ public class TrapHandler {
                             dialogueConditions = "kfuki_fix[1,85] \nkswing[8,50,6,40] \npwait[20] \nwndcol[110,30,30,95]";
                             Plugin.LogDebug("Conditions: " + defaultDialogueConditions);
 
-                            TriggerKingMessage.Initiate(dialoguePrint, dialogueConditions);
+                            KingMessage.Initiate(dialoguePrint, dialogueConditions);
 
                         } catch (Exception e) {
                             Plugin.LogDebug("Exception caught: " + e);

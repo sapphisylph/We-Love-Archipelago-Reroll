@@ -22,7 +22,7 @@ public class LocationCheckHandler {
     }
 
 
-    private static List<sbyte> ALAP5Cousins = [9, 32, 26, 38, 0];
+    public static List<sbyte> ALAP5Cousins = [9, 32, 26, 38, 0];
 
     // There's a different function for cousin roll-ups after the first time, so we'll hook this one too in case of a disconnect (or in case the AP screws with the first function)
     [HarmonyPatch(typeof(Game), nameof(Game.mYm_GiSetCatchOujiID_NotFirst)), HarmonyPostfix]
@@ -254,7 +254,7 @@ public class LocationCheckHandler {
                     break;
 
                 case 8:
-                    if (idx == 198) {
+                    if (idx == 198 || idx == 205 || idx == 208) {   // The dialogue ID for ALAP5 changes depending on how far over 2500m you got (or if you rolled up the king/queen? not 100% sure). 208 should cover any edge cases bc it always plays, just slightly later than the other super clear checks
                         Plugin.LogDebug("ALAP5 Super Clear detected, sending check.");
                         Plugin.APClient.SendCheck(8 + Plugin.SUPER_CLEAR_ID_OFFSET);
                         return;
@@ -675,9 +675,13 @@ public class LocationCheckHandler {
         Plugin.APClient.SendCheck(28 + Plugin.MISSION_ID_OFFSET); 
     }
 
+
     [HarmonyPatch(typeof(Game_Clear), nameof(Game_Clear.sItoko)), HarmonyPostfix]
     public static void DetectCousinsClear() {
-        Plugin.APClient.SendCheck(29 + Plugin.MISSION_ID_OFFSET); 
+        if (Plugin.cousinHuntActive) {
+            Plugin.LogDebug("Cousin hunt finished: Sending goal.");
+            Plugin.APClient.Goal();
+        }
     }
 
     // This also goals, but slightly later than the dialogue trigger. It's still here as a failsafe in case the first one doesn't work for whatever reason
@@ -686,6 +690,8 @@ public class LocationCheckHandler {
         Plugin.LogDebug("Dialogue trigger missed: Sending goal anyway.");
         Plugin.APClient.Goal(); 
     }
+
+
 
     // Later: Add Royal Reverie clears (sDLC_0, sDLC_1, etc)
 

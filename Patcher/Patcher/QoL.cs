@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using App.Katamari2;
+using Archipelago.MultiClient.Net.Packets;
 using HarmonyLib;
 using Il2CppSystem.Runtime.InteropServices;
 using Il2CppSystem.Threading;
+using UnityEngine;
+using WeLoveArchipelago.Archipelago;
 
 namespace WeLoveArchipelago.Patcher;
 
@@ -27,7 +31,7 @@ public class QoL {
     [HarmonyPatch(typeof(UIOusamaMessage), nameof(UIOusamaMessage.DecodeText)), HarmonyPrefix]
     public static void ShortenText(ref string __0) {
         
-        Plugin.LogDebug($"Playing King dialogue: \n{__0}");
+        // Plugin.LogDebug($"Playing King dialogue: \n{__0}");
 
         if (Plugin.showNewRollCheckDialogue) {
             __0 = Plugin.rollCheckDialogue;
@@ -72,14 +76,60 @@ public class QoL {
         return false;
     }
 
-    
 
-    
+    // Turning the Quit Game door into a Reconnect to AP door
 
-    // [HarmonyPatch(typeof(SelectHiroba_ShortcutController), nameof(SelectHiroba_ShortcutController.last_fan_index), MethodType.Getter), HarmonyPrefix]
-    // public static void PreventTheShortcutMenuFromBeingUsable() {
-    //     Plugin.LogDebug("Getter has been run.");
-    // }
+    [HarmonyPatch(typeof(SelectHiroba_DoorController), nameof(SelectHiroba_DoorController.Action)), HarmonyPrefix]
+    public static bool TurnQuitDoorIntoReconnectDoor()
+    {
+
+        if (ArchipelagoClient.Authenticated) { 
+            // This if statement should help prevent getting stuck in a disconnect/reconnect loop by alternating between disconnecting and reconnecting on every successive attempt
+            Plugin.LogDebug("Disconnecting from server...");
+            Plugin.APClient.Disconnect();   
+
+        } else {
+
+            Plugin.LogDebug("Attempting to reconnect to server...");
+            Plugin.APClient.Connect();
+
+        } 
+        return false;
+    }
+
+    public static SelectHiroba_ObjectSelect_SuperClass DoorTextPanel = null;
+
+    [HarmonyPatch(typeof(SelectHiroba_ObjectSelect_SuperClass), nameof(SelectHiroba_ObjectSelect_SuperClass.LoadText)), HarmonyPrefix]
+    public static bool ChangeDoorText(SelectHiroba_ObjectSelect_SuperClass __instance, int __0)
+    {
+        try {
+            if (__0 == 27)
+            {
+
+                if (DoorTextPanel == null) {
+                    DoorTextPanel = __instance;
+                }
+
+                DoorTextPanel.panel_text = "TOGGLE AP CONNECTION";
+
+                return false;
+
+            } else { 
+
+                return true; 
+
+            }
+        } catch (Exception e) {
+
+            Plugin.BepinLogger.LogError("Error while creating AP door panel text: \n" + e);
+            return true;
+
+        }
+
+
+    }
+
+
 
 }
    

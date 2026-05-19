@@ -54,6 +54,11 @@ public class Plugin : BasePlugin
 
 
     public static bool cousinsAppearAnywhere = false;
+    public static long selectedGoal = 0;
+    public static bool cousinHuntActive = false;
+    public static long cousinHuntPercentage = 100;
+    public static long cousinsInPool = 39;
+    public static long requiredCousins = 39;
 
 
     public static string currentStage = "Result";
@@ -110,12 +115,12 @@ public class Plugin : BasePlugin
         // In order for certain cousins to spawn in on the first run, this range of mystery IDs needs to be registered in the collection.
         // I'm just adding them to the queue here bc it's better for performance to only add them once, and it's easier to do that here
 
-        for (int i = 1485; i < 1500; i++) {     // TODO: Narrow this range further
-            LogDebug($"Adding ID {i}");         // Actually this might be fixed? Test later
-            ForceCousinsToAppearPatch.cousinsToForceIn.Add(i);
-        }
+        // for (int i = 0; i < 3500; i++) {     // TODO: Narrow this range further
+        //     LogDebug($"Adding ID {i}");         // Actually this might be fixed? Test later
+        //     ForceCousinsToAppearPatch.cousinsToForceIn.Add(i);
+        // }
 
-        Harmony.CreateAndPatchAll(typeof(StoreGameInfo));
+        Harmony.CreateAndPatchAll(typeof(DetectGameState));
         Harmony.CreateAndPatchAll(typeof(TrapHandler));
         Harmony.CreateAndPatchAll(typeof(LocationCheckHandler));
         Harmony.CreateAndPatchAll(typeof(ReceivedItemHandler));
@@ -139,7 +144,7 @@ public class Plugin : BasePlugin
     // Below is all trap stuff - for some reason defining these in TrapHandler.cs broke everything and I have no idea why, but they work perfectly fine here, so whatever
 
     public static int queuedDialogueTraps = 0;
-    public static UIOusamaMessage TriggerKingMessage = new UIOusamaMessage(); 
+    public static UIOusamaMessage KingMessage = new UIOusamaMessage(); 
     public static int queuedTrapsTotal = 0;
     public static int queuedWishYouWereHereTraps = 0;
     public static bool areAnyTrapsQueued = false;

@@ -10,6 +10,9 @@ using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
 using WeLoveArchipelago.Patcher;
 using System.Threading.Tasks;
+using WeLoveArchipelago.Utils;
+using Archipelago.MultiClient.Net.Exceptions;
+using System.Net.WebSockets;
 // using WeLoveArchipelago.Utils;
 
 namespace WeLoveArchipelago.Archipelago;
@@ -21,6 +24,8 @@ public class ArchipelagoClient
 
     public static bool Authenticated;
     private bool attemptingConnection;
+    private static bool initialConnectionStepsComplete = false;
+
 
     public static ArchipelagoData ServerData = new();
     private DeathLinkHandler DeathLinkHandler;
@@ -105,19 +110,48 @@ public class ArchipelagoClient
 
             Plugin.BepinLogger.LogMessage(outText);
 
-            // Retrieve YAML settings from server 
-            Plugin.cousinsAppearAnywhere = (long) success.SlotData["enable_alternative_cousin_logic"] == 1;
-
-            // Stole this bit from Hollow Knight's AP, sorry :p
-            // This is used to get all of the slot's location data and store it for later
-            Plugin.LogDebug("Scouting locations...");
-            Task<Dictionary<long, ScoutedItemInfo>> scoutTask = session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray());
-            scoutTask.Wait();
-            Plugin.LogDebug("Locations scouted!");
-            Dictionary<long, ScoutedItemInfo> scoutResult = scoutTask.Result;
+            if (!initialConnectionStepsComplete) {
                 
-            ProcessScoutedLocationData(scoutResult);
-            
+                // Everything here only needs to be done once upon the first connection per session. Using the reconnect door after the initial connection should skip these steps
+
+                // Retrieve YAML settings from server 
+                try {
+                    Plugin.LogDebug("Getting YAML information from server...");
+                    Plugin.cousinsAppearAnywhere = (long) success.SlotData["enable_alternative_cousin_logic"] == 1;
+                    Plugin.LogDebug("Retrieved cousin logic setting.");
+                    Plugin.selectedGoal = (long) success.SlotData["goal_option"];
+                    Plugin.LogDebug("Retrieved goal option.");
+                    if (Plugin.selectedGoal == 0 || Plugin.selectedGoal == 2) {
+                        Plugin.LogDebug("Cousin hunt detected as goal - getting more information.");
+                        Plugin.cousinHuntActive = true;
+                        Plugin.cousinHuntPercentage = (long) success.SlotData["cousin_hunt_percentage"];
+                        Plugin.LogDebug("Retrieved cousin hunt percentage.");
+                        Plugin.cousinsInPool = (long) success.SlotData["cousin_amount"];
+                        Plugin.LogDebug("Retrieved number of cousins in pool.");
+                        Plugin.requiredCousins = Plugin.cousinsInPool * (Plugin.cousinHuntPercentage / 100);
+                    }
+                } catch (Exception e)
+                {
+                    Plugin.BepinLogger.LogError("Error while reading YAML information: \n" + e);
+                }
+                
+                // Stole this bit from Hollow Knight's AP, sorry :p
+                // This is used to get all of the slot's location data and store it for later
+                Plugin.LogDebug("Scouting locations...");
+                Task<Dictionary<long, ScoutedItemInfo>> scoutTask = session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray());
+                scoutTask.Wait();
+                Plugin.LogDebug("Locations scouted!");
+                Dictionary<long, ScoutedItemInfo> scoutResult = scoutTask.Result;
+                    
+                ProcessScoutedLocationData(scoutResult);
+                
+                // Get the seed from the server to make/get the save file name, then try to load it
+                APSaveData.roomSeed = session.RoomState.Seed;
+                APSaveData.saveFilePath = $"BepInEx/plugins/WeLoveArchipelago/APSaveData/AP_{APSaveData.roomSeed}.json";
+                APSaveData.LoadAPDataFromFile();
+
+                initialConnectionStepsComplete = true;
+            }
         }
         else
         {
@@ -148,7 +182,7 @@ public class ArchipelagoClient
                 Plugin.LogDebug($"Processing scouted location data for location {locationId}...");
                 ScoutedItemInfo item = scout.Value;
                 string itemName = item.ItemName ?? $"?Item {item.ItemId}";
-                string receivingPlayer = item.Player.Alias ?? "Someone";
+                string receivingPlayer = item.Player.Alias ?? "someone else";
                 string receivingGame = item.Player.Game ?? "Unknown Game";
                 string itemClass = item.Flags.ToString() ?? "None";
                 string isLocalItem = item.IsReceiverRelatedToActivePlayer.ToString();
@@ -164,12 +198,18 @@ public class ArchipelagoClient
     /// <summary>
     /// something went wrong, or we need to properly disconnect from the server. cleanup and re null our session
     /// </summary>
-    private void Disconnect()
+    public void Disconnect()
     {
-        Plugin.BepinLogger.LogDebug("disconnecting from server...");
-        session?.Socket.DisconnectAsync();
-        session = null;
-        Authenticated = false;
+        try {
+            Plugin.BepinLogger.LogDebug("Disconnecting from server...");
+            session?.Socket.DisconnectAsync();
+            session = null;
+            Authenticated = false;
+        } catch (Exception e) {
+            Plugin.BepinLogger.LogError("Error while disconnecting from server: \n" + e);
+            session = null;
+            Authenticated = false;
+        }
     }
 
     public void SendMessage(string message)
@@ -181,33 +221,40 @@ public class ArchipelagoClient
     
 	public void SendCheck(int location) {
 
+        Plugin.LogDebug($"Sending check: {location}");
+
         // Plugin.LogDebug("Checked Locations:");
         // foreach (int i in checkedLocations) {
         //     string j = $"{i}";
         //     Plugin.LogDebug(j);
         // }
-    
 
-        if (location > 100 && location < 300) { // If the check is a present or cousin, create the new King dialogue and set it to appear
-            Fun.CreateKingRollUpDialogue(location); // This runs every attempted check so that the custom dialogue still appears on repeat playthroughs
+
+    
+        if (location < 300) { // If the check is a level clear, present, or cousin, create the new King dialogue and set it to appear
+            try {
+                KingDialogueCreator.CreateKingRollUpDialogue(location); // This runs every attempted check so that the custom dialogue still appears on repeat playthroughs    
+                ForceCousinsToAppearPatch.forcePresentSpawns = true;    // Force the present to spawn again if it was rolled up (for convenience)
+            } catch (Exception e) { Plugin.LogDebug("Error while creating roll-up dialogue:\n" + e); }
         }
 
-
         if (!checkedLocations.Contains(location)) {
-
-            Plugin.LogDebug($"Sending check: {location}");
 
             try {
 
                 session.Locations.CompleteLocationChecks(location);
                 checkedLocations.Add(location);  // Add the location to the list of cached locations so it doesn't try to send the same check 9 billion times
-                // The way this is implemented lets you reboot the game to try to re-send any checks that fail the first time
+                // If save data is cleared or edited, the memory will be cleared to allow sending the checks again
 
 
             } catch (NullReferenceException e) {
 
                 Plugin.BepinLogger.LogError("Failed to send location check. The server may be down or you may have otherwise lost connection to the AP server. Check that the server is still running and reconnect. \n Full error message: \n" + e);    
             
+            } catch (Exception e) {
+
+                Plugin.BepinLogger.LogError($"An unexpected error occurred: {e}");
+
             }
 
         } else {
@@ -235,6 +282,7 @@ public class ArchipelagoClient
     /// </summary>
     /// <param name="helper">item helper which we can grab our item from</param>
     private void OnItemReceived(ReceivedItemsHelper helper) {
+        
         var receivedItem = helper.DequeueItem();
 
         if (helper.Index <= ServerData.Index) return;
@@ -247,29 +295,25 @@ public class ArchipelagoClient
         int itemId = (int) receivedItem.ItemId;
         Plugin.BepinLogger.LogMessage($"Received {receivedItem.ItemName} from {receivedItem.Player.Name}!");
 
+        if (itemId >= Plugin.TRAP_ID_OFFSET) {
 
-            // Trap stuff (currently broken)
+            int trapId = itemId - Plugin.TRAP_ID_OFFSET;
 
+            // TODO: Put these into a queue rather than letting them sit here
 
-                if (itemId >= Plugin.TRAP_ID_OFFSET) {
-
-                    int trapId = itemId - Plugin.TRAP_ID_OFFSET;
-
-                    // TODO: Put these into a queue rather than letting them sit here
-
-                    if (trapId == 0) {
-                        TrapHandler.QueueDialogueTrap();
-                    } else if (trapId == 1) {
-                        TrapHandler.QueueWishYouWereHere(); 
-                    } else if (trapId == 2) {
-                        // Time Stop Trap
-                    } else if (trapId == 3) {
-                        // UI Loss Trap
-                    } else {
-                        Plugin.BepinLogger.LogMessage($"Received trap {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
-                    }
-                }
-                else
+            if (trapId == 0) {
+                TrapHandler.QueueDialogueTrap();
+            } else if (trapId == 1) {
+                TrapHandler.QueueWishYouWereHere(); 
+            } else if (trapId == 2) {
+                // Time Stop Trap
+            } else if (trapId == 3) {
+                // UI Loss Trap
+            } else {
+                Plugin.BepinLogger.LogMessage($"Received trap {receivedItem.ItemName} was not recognized. Contact the mod developer if you see this message! (ID = {itemId})");
+            }
+        }
+        else
 
         if (itemId >= Plugin.FILLER_ID_OFFSET) {
 
@@ -292,6 +336,19 @@ public class ArchipelagoClient
 
         else if (itemId >= Plugin.COUSIN_ID_OFFSET) {
             Plugin.cousins.Add(itemId - Plugin.COUSIN_ID_OFFSET);
+            // If the player has reached their cousin hunt goal, give the player every cousin and put every cousin into the collection
+            if (Plugin.cousinHuntActive) {
+                if (Plugin.cousins.Count >= Plugin.requiredCousins) {
+                    for (int i = 0; i < 40; i++) {
+                        Plugin.cousins.Add(i);
+                    }
+                    Plugin.LogDebug("Adding all cousins to the collection...");
+                    foreach (List<int> list in ForceCousinsToAppearPatch.listOfCousinLists) {
+                        ForceCousinsToAppearPatch.cousinsToForceIn.AddRange(list);
+                    }
+                    ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
+                }
+            }
         }
 
         else if (itemId >= Plugin.FAN_ID_OFFSET) {
@@ -299,6 +356,21 @@ public class ArchipelagoClient
             if (!Plugin.cousinsAppearAnywhere) {
                 ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
                 ForceCousinsToAppearPatch.recentlyReceivedFans.Add(itemId - Plugin.FAN_ID_OFFSET);
+            }
+            // If the received fan was Mutsuo Hoshino and the player has already reached their cousin hunt goal, give the player every cousin and put every cousin into the collection
+            if (itemId == (27 + Plugin.FAN_ID_OFFSET)) {
+                if (Plugin.cousinHuntActive) {
+                    if (Plugin.cousins.Count >= Plugin.requiredCousins) {
+                        for (int i = 0; i < 40; i++) {
+                            Plugin.cousins.Add(i);
+                        }
+                        Plugin.LogDebug("Adding all cousins to the collection...");
+                        foreach (List<int> list in ForceCousinsToAppearPatch.listOfCousinLists) {
+                            ForceCousinsToAppearPatch.cousinsToForceIn.AddRange(list);
+                        }
+                        ForceCousinsToAppearPatch.queueForceNewCousinsSpawn = true;
+                    }
+                }
             }
         }
 

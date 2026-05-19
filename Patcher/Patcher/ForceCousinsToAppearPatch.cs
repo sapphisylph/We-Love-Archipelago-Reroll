@@ -11,7 +11,7 @@ public class ForceCousinsToAppearPatch {
 
     // Lists of every cousin's collection IDs, because for some reason each cousin has multiple and not all of them follow a consistent pattern. Credit goes to the WLK speedrunning discord for collecting all these!
 
-    public static readonly List<int> collectionPrince = [3381, 3421, 3461, 1476];
+    public static readonly List<int> collectionPrince = [3381, 3421, 3461, 1476, 2836, 2936, 2937]; // Includes Sun IDs
     public static readonly List<int> collectionLalala = [3382, 3464, 1477];
     public static readonly List<int> collectionNik = [3463, 1478, 3383, 3423];
     public static readonly List<int> collectionAce = [3384, 3464, 1479, 3424];
@@ -56,20 +56,20 @@ public class ForceCousinsToAppearPatch {
     // And a list of all the lists together to reference if all cousins should always appear
     public static List<List<int>> listOfCousinLists = [collectionPrince, collectionLalala, collectionNik, collectionAce, collectionJohnson, collectionVelvet, collectionFujio, collectionHavana, collectionPeso, collectionShikao, collectionOdeko, collectionHoney, collectionMarny, collectionKuro, collectionFoomin, collectionJune, collectionIchigo, collectionMarcy, collectionNjamo, collectionDipp, collectionOpeo, collectionNickel, collectionJungle, collectionMiso, collectionTwinkle, collectionHuey, collectionNutsuo, collectionBeyond, collectionKinoko, collectionMacho, collectionLamour, collectionDaisy, collectionLucha, collectionMiki, collectionOdeon, collectionCanCan, collectionShy, collectionSlip, collectionDrooby, collectionSignolo];
 
+
     public static bool queueForceNewCousinsSpawn = true;
     public static List<int> recentlyReceivedFans = [];
     public static List<int> cousinsToForceIn = collectionPrince;
 
     public static bool hasTutorialFlagBeenSet = false;
 
-
+    public static bool forcePresentSpawns = true;
 
 
     // The collection determines which cousins should be able to spawn either in their non-native levels or as progressive unlocks (ie you need Can-Can in the collection before Havana will appear in ALAP2).
     // Here, cousin collection data is set for every cousin based on which stage they first appear in (or all at once, if the setting allows it)
     [HarmonyPatch(typeof(Select), nameof(Select.mYd_OujiSetFanNo)), HarmonyPostfix]
     public static void ForceProgressiveCousinSpawns() {     // Patches a function that runs every time you talk to an npc in the select meadow for quick changing of the collected cousins in case a level is found while in the meadow
-        
 
         if (queueForceNewCousinsSpawn) {
 
@@ -215,6 +215,11 @@ public class ForceCousinsToAppearPatch {
 
         }
 
+        if (forcePresentSpawns) {
+            for (int i = 2976; i <= 3000; i++) {    // This range contains all present roll-up IDs
+                Game.mYm_SiGameSetMonoGet(i, 0);    // Force all present IDs to be in the uncollected state so that they always spawn in
+            }
+        }
 
         // if (!hasTutorialFlagBeenSet) {
         //     Select.sTutorial();
