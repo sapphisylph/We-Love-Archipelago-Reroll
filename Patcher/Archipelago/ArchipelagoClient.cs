@@ -299,8 +299,6 @@ public class ArchipelagoClient
 
             int trapId = itemId - Plugin.TRAP_ID_OFFSET;
 
-            // TODO: Put these into a queue rather than letting them sit here
-
             if (trapId == 0) {
                 TrapHandler.QueueDialogueTrap();
             } else if (trapId == 1) {
