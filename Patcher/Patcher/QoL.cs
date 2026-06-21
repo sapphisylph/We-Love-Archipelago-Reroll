@@ -76,6 +76,11 @@ public class QoL {
         return false;
     }
 
+    [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiGameCheckFailureSpace)), HarmonyPrefix]
+    public static bool AllowClearingRUTSFirstTime(ref byte __result) {
+        __result = 1;
+        return false;
+    }
 
     // Turning the Quit Game door into a Reconnect to AP door
 

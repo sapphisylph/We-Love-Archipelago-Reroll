@@ -15,6 +15,8 @@ public class APSaveData {
     public static int currentUsedTextTraps;
     public static int currentUsedWishYouWereHereTraps;
     public static int currentUsedTimeStopTraps;
+    public static int[] musicRandoOrder;
+    public static bool musicRandoLoaded = false;
     public static string saveFilePath;
     
     public static async Task SaveAPDataToFile() {
@@ -34,7 +36,8 @@ public class APSaveData {
                 checkedLocations = ArchipelagoClient.checkedLocations,
                 usedTextTraps = currentUsedTextTraps,
                 usedWishYouWereHereTraps = currentUsedWishYouWereHereTraps,
-                usedTimeStopTraps = currentUsedTimeStopTraps
+                usedTimeStopTraps = currentUsedTimeStopTraps,
+                musicRandoOrder = Plugin.musicRandoList
             };
 
             string jsonOutput = JsonSerializer.Serialize(NewSave, new JsonSerializerOptions { WriteIndented = false });
@@ -72,6 +75,12 @@ public class APSaveData {
             currentUsedTextTraps = storedData.usedTextTraps;
             currentUsedTimeStopTraps = storedData.usedTimeStopTraps;
             currentUsedWishYouWereHereTraps = storedData.usedWishYouWereHereTraps;
+
+            // Get music rando order
+            if (storedData.checkedLocations != null) {
+                musicRandoOrder = storedData.musicRandoOrder;
+                musicRandoLoaded = true;
+            }
 
             // Retrieve all already-sent checks (if there are any) to reduce server strain 
             if (storedData.checkedLocations != null) {

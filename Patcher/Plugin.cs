@@ -96,21 +96,10 @@ public class Plugin : BasePlugin
 		APClient.Connect();
 
 
-        // Music Rando stuff, could probably be moved elsewhere later
-
-        // Fill the musicRandoList array with song IDs 0 - 34 (the number of song IDs in the base game) in order
-        for (int i = 0; i < musicRandoList.Length; i++) {
-            musicRandoList[i] = i;
-        } 
-        // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
-        int count = musicRandoList.Length;
-        while (count > 1) {
-            int i = rand.Next(count--);
-            (musicRandoList[i], musicRandoList[count]) = (musicRandoList[count], musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
-        }
-
         ReadFiles.ReadDescriptionJSONs();
         ReadFiles.GetTextTraps();
+
+
 
         // In order for certain cousins to spawn in on the first run, this range of mystery IDs needs to be registered in the collection.
         // I'm just adding them to the queue here bc it's better for performance to only add them once, and it's easier to do that here

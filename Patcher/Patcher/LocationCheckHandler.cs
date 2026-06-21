@@ -696,12 +696,64 @@ public class LocationCheckHandler {
     // Later: Add Royal Reverie clears (sDLC_0, sDLC_1, etc)
 
 
+    private static byte suspicions = 0;
+
     [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiGameCheckMonoGet)), HarmonyPostfix]
     public static void DetectCollectionItemRollUp(int _code) {
 
+        // Because I have the second line of defense below, this may need to be removed eventually
         if (Plugin.currentStage == "Result") {
             return; // Don't bother trying to send checks if in the select meadow
         }
+
+        
+
+        // The game loooves running through Every Single Collection ID every time you go back to the Select Meadow (and due to the number of different ways you can return to the select meadow, it's hard to account for them all), so by using some Shenanigans, we'll detect when it's doing this and prevent it from sending checks during it
+        // Collectionsanity isn't implemented yet, but this is here now because it will eventually need to be made when that happens
+        if (suspicions == 3) {
+            if (_code == 3500)
+            {
+                suspicions = 0;
+                Plugin.LogDebug("It's done :)");
+            }
+            return;
+        }
+
+        // If it checks for the sequential IDs of 1, then 2, then 3, it's doing a run-through. So, we detect if those three IDs are checked in succession to determine if this is a run through
+        // Just 1 and 2 isn't good enough because 1 (Spatula) is found in ALAP3 along with 2 (Persimmon). However, 3 (Brick) isn't in ALAP3, so the first 3 should be good enough protection to make sure nothing horrible happens (< clueless)
+        if (_code == 1) {
+            if (suspicions == 0) {
+                suspicions += 1;
+                return;            
+                // Don't send this collectionsanity check ID yet, wait until another item is rolled up to make sure this isn't a run-through
+            } else {
+                suspicions = 0;
+                // The collectionsanity check for the spatula will eventually get sent below as long as this function isn't returned early (in the event of the rare Double Spatula)
+            }
+
+        }
+
+        if (_code == 2) {
+            if (suspicions == 1) {
+                suspicions += 1;
+                return;
+            } else {
+                suspicions = 0;
+                // TODO FOR COLLECTIONSANITY: Send the Spatula check here
+            }
+        }
+
+        if (_code == 3) {
+            if (suspicions == 2) {
+                suspicions += 1;
+                Plugin.LogDebug("It's running through every single check ID again, just let it do its thing");
+                return;
+            } else {
+                suspicions = 0;
+                // TODO FOR COLLECTIONSANITY: Send the Spatula and Persimmon checks here
+            }
+        }
+        
 
         // For some reason, rolling up the Prince doesn't use the same function as every other cousin, so I just detect the raw item roll-up instead
         if (_code == 3381 || _code == 3421 || _code == 3461) {  // Listing these out manually instead of referencing the list in ForceCousinsToAppearPatch because I feel like it'd hurt performance to run a function on the same list of 3 items every time an item is rolled up    

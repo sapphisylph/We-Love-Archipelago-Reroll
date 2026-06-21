@@ -53,10 +53,18 @@ public class KingDialogueCreator
             return;
         }
 
-        // Don't show dialogue for ALAP5 unless it's one of the normal cousins in the level
+        // Don't show dialogue for ALAP5 unless it's one of the normal cousins in the level or the present
         int cousinCheckId = location - Plugin.COUSIN_ID_OFFSET;
-        if (Plugin.currentStage == "MissionScene/big5" && !LocationCheckHandler.ALAP5Cousins.Contains(Convert.ToSByte(cousinCheckId))) {
+        int presentCheckId = location - Plugin.PRESENT_ID_OFFSET;
+        if (((Plugin.currentStage == "MissionScene/big5") || (Plugin.currentStage == "MissionScene/big5B")) && (!LocationCheckHandler.ALAP5Cousins.Contains(Convert.ToSByte(cousinCheckId)) && (presentCheckId != 8))) {
+            Plugin.LogDebug($"Location {location} belongs to a cousin that doesn't send a check in ALAP5, so dialogue wasn't created for the check.");
             return;
+        }
+
+        // If the location doesn't exist in the scouted location data, make a note of it and return early
+        if (!ArchipelagoClient.scoutedLocations.ContainsKey(location)) {
+            Plugin.LogDebug($"Location {location} does not exist in scouted multiworld data, so King dialogue was not created.");
+            return; 
         }
 
         List<string> foundItemData = ArchipelagoClient.scoutedLocations[location]; // Get the scouted item data to use to display (item data is scouted upon connection)

@@ -150,7 +150,30 @@ public class ArchipelagoClient
                 APSaveData.saveFilePath = $"BepInEx/plugins/WeLoveArchipelago/APSaveData/AP_{APSaveData.roomSeed}.json";
                 APSaveData.LoadAPDataFromFile();
 
+                // Music Rando stuff, could probably be moved elsewhere later
+
+                    if (!APSaveData.musicRandoLoaded) {
+                    
+                        Plugin.LogDebug("Randomizing music...");
+                        // Fill the musicRandoList array with song IDs 0 - 34 (the number of song IDs in the base game) in order
+                        for (int i = 0; i < Plugin.musicRandoList.Length; i++) {
+                            Plugin.musicRandoList[i] = i;
+                        } 
+                        // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
+                        int count = Plugin.musicRandoList.Length;
+                        while (count > 1) {
+                            int i = Plugin.rand.Next(count--);
+                            (Plugin.musicRandoList[i], Plugin.musicRandoList[count]) = (Plugin.musicRandoList[count], Plugin.musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
+                        }
+
+                    } else
+                    {
+                        Plugin.LogDebug("Loading music rando from save data...");
+                        Plugin.musicRandoList = APSaveData.musicRandoOrder;
+                    }
+
                 initialConnectionStepsComplete = true;
+                
             }
         }
         else
