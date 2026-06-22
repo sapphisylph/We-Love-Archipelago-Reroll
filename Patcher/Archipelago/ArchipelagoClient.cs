@@ -258,7 +258,7 @@ public class ArchipelagoClient
             try {
                 KingDialogueCreator.CreateKingRollUpDialogue(location); // This runs every attempted check so that the custom dialogue still appears on repeat playthroughs    
                 ForceCousinsToAppearPatch.forcePresentSpawns = true;    // Force the present to spawn again if it was rolled up (for convenience)
-            } catch (Exception e) { Plugin.LogDebug("Error while creating roll-up dialogue:\n" + e); }
+            } catch (Exception e) { Plugin.BepinLogger.LogError("Error while creating roll-up dialogue:\n" + e); }
         }
 
         if (!checkedLocations.Contains(location)) {
@@ -267,7 +267,7 @@ public class ArchipelagoClient
 
                 session.Locations.CompleteLocationChecks(location);
                 checkedLocations.Add(location);  // Add the location to the list of cached locations so it doesn't try to send the same check 9 billion times
-                // If save data is cleared or edited, the memory will be cleared to allow sending the checks again
+                // If save data is cleared, the memory will be cleared to allow sending the checks again
 
 
             } catch (NullReferenceException e) {

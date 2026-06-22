@@ -10,23 +10,6 @@ namespace WeLoveArchipelago.Patcher;
 
 public class TrapHandler {
 
-
-            // Testing stuff, remove later
-            // else {
-            //     StringBuilder multiLine = new StringBuilder();
-            //     multiLine.AppendLine("This is Our dialogue.");
-            //     multiLine.AppendLine("This is a second line.");
-            //     multiLine.AppendLine("And this'll be in");
-            //     multiLine.AppendLine("a second textbox.");
-            //     multiLine.AppendLine("Thrilling.");
-            //     multiLine.AppendLine("");
-            //     multiLine.AppendLine("Truly thrilling.");
-            //     __0 = multiLine.ToString();
-            // }
-
-
-
-
     public static void QueueDialogueTrap() {
 
         try {
