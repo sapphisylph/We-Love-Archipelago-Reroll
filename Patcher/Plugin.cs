@@ -110,7 +110,7 @@ public class Plugin : BasePlugin
         // }
 
         Harmony.CreateAndPatchAll(typeof(DetectGameState));
-        Harmony.CreateAndPatchAll(typeof(TrapHandler));
+        // Harmony.CreateAndPatchAll(typeof(TrapHandler));
         Harmony.CreateAndPatchAll(typeof(LocationCheckHandler));
         Harmony.CreateAndPatchAll(typeof(ReceivedItemHandler));
         Harmony.CreateAndPatchAll(typeof(Fun));

@@ -123,34 +123,36 @@ public class ReadFiles {
     public static List<string> textTrapList = [];
 
     public static void GetTextTraps() {
-        
-        Plugin.LogDebug("Getting text trap files...");
 
-        if (!Directory.Exists("BepInEx/plugins/WeLoveArchipelago/TextTraps")) {
-            Directory.CreateDirectory("BepInEx/plugins/WeLoveArchipelago/TextTraps");
-        }
+        // Commented out until the apworld updates to put text traps in the pool
 
-        string[] textTrapFiles = Directory.GetFiles("BepInEx/plugins/WeLoveArchipelago/TextTraps");
+        // Plugin.LogDebug("Getting text trap files...");
 
-        if (textTrapFiles.Length != 0) {    
+        // if (!Directory.Exists("BepInEx/plugins/WeLoveArchipelago/TextTraps")) {
+        //     Directory.CreateDirectory("BepInEx/plugins/WeLoveArchipelago/TextTraps");
+        // }
 
-            foreach (string filePath in textTrapFiles) {
+        // string[] textTrapFiles = Directory.GetFiles("BepInEx/plugins/WeLoveArchipelago/TextTraps");
+
+        // if (textTrapFiles.Length != 0) {    
+
+        //     foreach (string filePath in textTrapFiles) {
                 
-                if (!filePath.EndsWith(".txt")) { continue; }    // Skip any files that aren't .txt format
+        //         if (!filePath.EndsWith(".txt")) { continue; }    // Skip any files that aren't .txt format
 
-                try {
+        //         try {
 
-                    using StreamReader txtReader = new StreamReader(filePath);
-                    string txtContents = txtReader.ReadToEnd();
-                    textTrapList.Add(txtContents);
+        //             using StreamReader txtReader = new StreamReader(filePath);
+        //             string txtContents = txtReader.ReadToEnd();
+        //             textTrapList.Add(txtContents);
                     
-                } catch (Exception e) {
-                    Plugin.BepinLogger.LogError($"Failed to get text trap dialogue located at {filePath}. \nCaught exception: \n{e}");
-                }
+        //         } catch (Exception e) {
+        //             Plugin.BepinLogger.LogError($"Failed to get text trap dialogue located at {filePath}. \nCaught exception: \n{e}");
+        //         }
                 
 
-            }
-        }
+        //     }
+        // }
     }
 }
 

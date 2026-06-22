@@ -119,17 +119,21 @@ public class ArchipelagoClient
                     Plugin.LogDebug("Getting YAML information from server...");
                     Plugin.cousinsAppearAnywhere = (long) success.SlotData["enable_alternative_cousin_logic"] == 1;
                     Plugin.LogDebug("Retrieved cousin logic setting.");
-                    Plugin.selectedGoal = (long) success.SlotData["goal_option"];
-                    Plugin.LogDebug("Retrieved goal option.");
-                    if (Plugin.selectedGoal == 0 || Plugin.selectedGoal == 2) {
-                        Plugin.LogDebug("Cousin hunt detected as goal - getting more information.");
-                        Plugin.cousinHuntActive = true;
-                        Plugin.cousinHuntPercentage = (long) success.SlotData["cousin_hunt_percentage"];
-                        Plugin.LogDebug("Retrieved cousin hunt percentage.");
-                        Plugin.cousinsInPool = (long) success.SlotData["cousin_amount"];
-                        Plugin.LogDebug("Retrieved number of cousins in pool.");
-                        Plugin.requiredCousins = Plugin.cousinsInPool * (Plugin.cousinHuntPercentage / 100);
-                    }
+
+                    // Retrieving Cousin Hunt goal; commented out until apworld updates
+
+                    // Plugin.selectedGoal = (long) success.SlotData["goal_option"];
+                    // Plugin.LogDebug("Retrieved goal option.");
+                    // if (Plugin.selectedGoal == 0 || Plugin.selectedGoal == 2) {
+                    //     Plugin.LogDebug("Cousin hunt detected as goal - getting more information.");
+                    //     Plugin.cousinHuntActive = true;
+                    //     Plugin.cousinHuntPercentage = (long) success.SlotData["cousin_hunt_percentage"];
+                    //     Plugin.LogDebug("Retrieved cousin hunt percentage.");
+                    //     Plugin.cousinsInPool = (long) success.SlotData["cousin_amount"];
+                    //     Plugin.LogDebug("Retrieved number of cousins in pool.");
+                    //     Plugin.requiredCousins = Plugin.cousinsInPool * (Plugin.cousinHuntPercentage / 100);
+                    // }
+
                 } catch (Exception e)
                 {
                     Plugin.BepinLogger.LogError("Error while reading YAML information: \n" + e);
@@ -152,25 +156,25 @@ public class ArchipelagoClient
 
                 // Music Rando stuff, could probably be moved elsewhere later
 
-                    if (!APSaveData.musicRandoLoaded) {
-                    
-                        Plugin.LogDebug("Randomizing music...");
-                        // Fill the musicRandoList array with song IDs 0 - 34 (the number of song IDs in the base game) in order
-                        for (int i = 0; i < Plugin.musicRandoList.Length; i++) {
-                            Plugin.musicRandoList[i] = i;
-                        } 
-                        // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
-                        int count = Plugin.musicRandoList.Length;
-                        while (count > 1) {
-                            int i = Plugin.rand.Next(count--);
-                            (Plugin.musicRandoList[i], Plugin.musicRandoList[count]) = (Plugin.musicRandoList[count], Plugin.musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
-                        }
-
-                    } else
-                    {
-                        Plugin.LogDebug("Loading music rando from save data...");
-                        Plugin.musicRandoList = APSaveData.musicRandoOrder;
+                if (!APSaveData.musicRandoLoaded) {
+                
+                    Plugin.LogDebug("Randomizing music...");
+                    // Fill the musicRandoList array with song IDs 0 - 34 (the number of song IDs in the base game) in order
+                    for (int i = 0; i < Plugin.musicRandoList.Length; i++) {
+                        Plugin.musicRandoList[i] = i;
+                    } 
+                    // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
+                    int count = Plugin.musicRandoList.Length;
+                    while (count > 1) {
+                        int i = Plugin.rand.Next(count--);
+                        (Plugin.musicRandoList[i], Plugin.musicRandoList[count]) = (Plugin.musicRandoList[count], Plugin.musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
                     }
+
+                } else
+                {
+                    Plugin.LogDebug("Loading music rando from save data...");
+                    Plugin.musicRandoList = APSaveData.musicRandoOrder;
+                }
 
                 initialConnectionStepsComplete = true;
                 

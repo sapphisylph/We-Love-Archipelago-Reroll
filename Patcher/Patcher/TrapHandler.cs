@@ -73,6 +73,8 @@ public class TrapHandler {
 
                     if (queuedWishYouWereHereTraps > 0) {
                         
+                        // This doesn't work yet as far as I remember
+
                         if (trapTimer == 0) {
                             
                             frameNumber = rand.Next(7); // choose a random number from 0 to 7, and trigger that photo frame to appear

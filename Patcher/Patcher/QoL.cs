@@ -18,7 +18,7 @@ public class QoL {
 
 
     [HarmonyPatch(typeof(NextArrow), nameof(NextArrow.SetVisible)), HarmonyPrefix]
-    public static bool TurnOffGPS(ref bool __0) {  // Disables the guide that appears at the top of the screen telling you how to go to the next area. I'll likely make this an optional setting, I just have an unreasonable disdain for this thing
+    public static bool TurnOffGPS(ref bool __0) {  // Disables the guide that appears at the top of the screen telling you how to go to the next area. I have an unreasonable disdain for this thing
         if (Plugin.turnOffGPS) {
             if (__0 == true) {
                 return false;
@@ -51,8 +51,7 @@ public class QoL {
 
 
     // Tutorial Skipping Stuff 
-    // Some of this doesn't work, some of it is actively counterproductive, some of it just hasn't been tested
-
+    
     // [HarmonyPatch(typeof(Game), nameof(Game.mYm_SiTutoSetHiroba1st)), HarmonyPrefix]
     // public static bool RemoveIntroMeadowPopup() {
     //     return false;
