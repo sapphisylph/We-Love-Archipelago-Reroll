@@ -38,14 +38,14 @@ The apworld and plugin for WLKRR can be found in the [releases](https://github.c
    - If no console window opens automatically, you can make it appear on startup by setting `[Logging.Console] Enabled = true` in the `BepInEx.cfg` file in the same config folder as before.
 3. If this is your first time playing on this slot, start a new file. Otherwise, continue playing whichever file you connected with previously.
    - Note: This plugin may mess up existing save files if you load into them with the plugin active. If you have any saves that you care about, uninstall the plugin before opening them (and if you accidentally open an existing save with the plugin installed, you should force-close the game before it has a chance to save).
-- If you get disconnected mid-game, there is currently no way to reconnect while the game is running, so you'll have to close and reopen the game to reconnect to the server.
+- If you get disconnected mid-game, you can interact with the door in the fifth page of the Select Meadow to reconnect to the server. Note that the game currently crashes when attempting to send a check while disconnected from the server.
 
 ### Uninstallation
 To uninstall the mod, all you need to do is remove the WeLoveArchipelago folder from `C:\Program Files (x86)\Steam\steamapps\common\WLKRR\BepInEx\plugins`
 
 ## Known Issues
-- The Select Meadow only updates received fans and cousins upon reload. If you receive an item while in the Select Meadow, you can reload it by entering and exiting the Favorite Music menu, the Collection, or any level.
+- The Select Meadow only updates received fans and cousins upon reload. If you receive an item while in the Select Meadow, you can reload it by entering and exiting the Favorite Music menu, the Collection, or any level. Additionally, cousins don't seem to spawn in after a level exit for some reason, so you'll need to use one of the other methods for them.
 - The fan selection menu in the Select Meadow doesn't update with receiving fans, so you will be automatically booted out of the menu if you try to open it to prevent being able to play the entire game out-of-logic.
-- Roll Up the Sun is currently impossible to clear on the first playthrough. The first failure is scripted to happen even if you already completed every level and rolled up enough stars to beat the level, so you'll have to play the level twice in order to goal.
+- Because of how the game is coded, you are required to finish all mainline story levels before being able to clear Roll Up the Sun, so there isn't much flexibility in how long you can make your seeds with RUTS as your goal. We're still looking into ways around this.
 - Super Clear and Shooting Star checks are sent on the results screen, while the level clear check is sent immediately upon winning, so don't panic if all the checks don't send immediately!
 - We haven't found a way to allow playing any given fan's stages out of order yet, so you need to play them in the intended order currently (i.e. you have to play ALAP1 in order to play AFAP1, you need to finish Small Campfire in order to do Medium in order to do Large, etc.). This doesn't have any effect on progression across fans (i.e. you don't need to play ALAP1 in order to play ALAP2).

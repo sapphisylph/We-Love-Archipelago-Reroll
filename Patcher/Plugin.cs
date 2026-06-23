@@ -10,6 +10,8 @@ using BepInEx.Configuration;
 using App.Katamari2;
 using Il2CppSystem.Runtime.Remoting;
 using Archipelago.MultiClient.Net;
+using Il2CppSystem.Runtime.InteropServices;
+using WeLoveArchipelago.Utils;
 // using WeLoveArchipelago.Utils;
 
 namespace WeLoveArchipelago;
@@ -52,10 +54,19 @@ public class Plugin : BasePlugin
 
 
     public static bool cousinsAppearAnywhere = false;
+    public static long selectedGoal = 0;
+    public static bool cousinHuntActive = false;
+    public static long cousinHuntPercentage = 100;
+    public static long cousinsInPool = 39;
+    public static long requiredCousins = 39;
 
 
     public static string currentStage = "Result";
+    public static bool isCurrentlyInALevel = false;
+    public static bool showNewRollCheckDialogue = false;
+    public static string rollCheckDialogue = "";
     public static System.Random rand = new System.Random();
+
 
     public override void Load()
     {
@@ -85,28 +96,20 @@ public class Plugin : BasePlugin
 		APClient.Connect();
 
 
-        // Music Rando stuff, could probably be moved elsewhere later
+        ReadFiles.ReadDescriptionJSONs();
+        ReadFiles.GetTextTraps();
 
-        // Fill the musicRandoList array with song IDs 0 - 34 (the number of song IDs in the base game) in order
-        for (int i = 0; i < musicRandoList.Length; i++) {
-            musicRandoList[i] = i;
-        } 
-        // This is a Fisher-Yates randomizer algorithm, it reorders the list of song IDs randomly
-        int count = musicRandoList.Length;
-        while (count > 1) {
-            int i = rand.Next(count--);
-            (musicRandoList[i], musicRandoList[count]) = (musicRandoList[count], musicRandoList[i]); // Switch the ID in spot number [count] with a random other ID in spot number [i]. Repeat for each ID in the array
-        }
 
 
         // In order for certain cousins to spawn in on the first run, this range of mystery IDs needs to be registered in the collection.
         // I'm just adding them to the queue here bc it's better for performance to only add them once, and it's easier to do that here
 
-        for (int i = 1485; i < 1500; i++) {     // TODO: Narrow this range further
-            LogDebug($"Adding ID {i}");
-            ForceCousinsToAppearPatch.cousinsToForceIn.Add(i);
-        }
+        // for (int i = 0; i < 3500; i++) {     // TODO: Narrow this range further
+        //     LogDebug($"Adding ID {i}");         // Actually this might be fixed? Test later
+        //     ForceCousinsToAppearPatch.cousinsToForceIn.Add(i);
+        // }
 
+        Harmony.CreateAndPatchAll(typeof(DetectGameState));
         // Harmony.CreateAndPatchAll(typeof(TrapHandler));
         Harmony.CreateAndPatchAll(typeof(LocationCheckHandler));
         Harmony.CreateAndPatchAll(typeof(ReceivedItemHandler));
@@ -124,6 +127,31 @@ public class Plugin : BasePlugin
             BepinLogger.LogMessage(message);
         }
     }
+
+
+
+    // Below is all trap stuff - for some reason defining these in TrapHandler.cs broke everything and I have no idea why, but they work perfectly fine here, so whatever
+
+    public static int queuedDialogueTraps = 0;
+    public static UIOusamaMessage KingMessage = new UIOusamaMessage(); 
+    public static int queuedTrapsTotal = 0;
+    public static int queuedWishYouWereHereTraps = 0;
+    public static bool areAnyTrapsQueued = false;
+    public static bool isCurrentlyInDialogue = true;
+
+    public static string defaultDialogueConditions = "kfuki_fix[2,85] \nkswing[8,50,6,40] \npwait[20] \nwndcol[45,45,45,90]";
+    public static string dialoguePrint = "We are the King. \nWe are incredible!";
+
+
+    public static int trapTimer = 0;
+    public static int trapTimerLimit = 0;
+
+    public static GameObject ChosenFrame = null;
+    public static GameObject FrameUI = null;
+    public static GameObject Frame00 = null;
+    public static int frameNumber;
+
+
 
     // private void OnGUI()
     // {
